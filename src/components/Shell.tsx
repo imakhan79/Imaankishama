@@ -1,4 +1,5 @@
 import { ReactNode, useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, BookOpen, Users, ClipboardList, BarChart3,
   Bell, Settings, LogOut, FileText, Target,
@@ -297,29 +298,39 @@ export default function Shell({
       </aside>
 
       {/* Mobile drawer */}
-      {drawerOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 flex">
-          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDrawerOpen(false)} />
-          <aside className="relative w-72 flex flex-col animate-slide-right"
-                 style={{ background: 'linear-gradient(180deg,#052f5c 0%,#063b73 100%)' }}>
-            <NavContent
-              navGroups={navGroups}
-              active={active}
-              expandedIds={expandedIds}
-              toggleExpanded={toggleExpanded}
-              onNavigate={onNavigate}
-              alertsCount={alertsCount}
-              roleLabel={rs.label}
-              roleGrad={rs.grad}
-              fullName={profile?.full_name || 'User'}
-              email={profile?.email || ''}
-              initials={initials}
-              signOut={signOut}
-              onClose={() => setDrawerOpen(false)}
+      <AnimatePresence>
+        {drawerOpen && (
+          <div className="lg:hidden fixed inset-0 z-50 flex">
+            <motion.div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+              onClick={() => setDrawerOpen(false)}
             />
-          </aside>
-        </div>
-      )}
+            <motion.aside
+              className="relative w-72 flex flex-col"
+              style={{ background: 'linear-gradient(180deg,#052f5c 0%,#063b73 100%)' }}
+              initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
+              <NavContent
+                navGroups={navGroups}
+                active={active}
+                expandedIds={expandedIds}
+                toggleExpanded={toggleExpanded}
+                onNavigate={onNavigate}
+                alertsCount={alertsCount}
+                roleLabel={rs.label}
+                roleGrad={rs.grad}
+                fullName={profile?.full_name || 'User'}
+                email={profile?.email || ''}
+                initials={initials}
+                signOut={signOut}
+                onClose={() => setDrawerOpen(false)}
+              />
+            </motion.aside>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Main area */}
       <div className="flex-1 lg:ml-64 flex flex-col min-w-0 pb-20 lg:pb-0">
@@ -369,11 +380,16 @@ export default function Shell({
         </header>
 
         {/* Command palette */}
+        <AnimatePresence>
         {searchOpen && (
-          <div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
+          <motion.div className="fixed inset-0 z-[100] flex items-start justify-center pt-[15vh] px-4"
                style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)' }}
+               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }}
+               role="dialog" aria-modal="true" aria-label="Search"
                onClick={() => { setSearchOpen(false); setQuery(''); }}>
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-scale-in"
+            <motion.div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden"
+                 initial={{ opacity: 0, scale: 0.96, y: -8 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.98 }}
+                 transition={{ duration: 0.18, ease: 'easeOut' }}
                  onClick={e => e.stopPropagation()}>
               <div className="flex items-center gap-3 px-4 py-3 border-b border-slate-100">
                 <Search size={18} className="text-slate-400 shrink-0" />
@@ -415,9 +431,10 @@ export default function Shell({
                   </>
                 )}
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         )}
+        </AnimatePresence>
 
         {/* Page content */}
         <main className="flex-1 p-4 sm:p-5 lg:p-8 max-w-7xl mx-auto w-full page-enter">

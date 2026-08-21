@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────
@@ -202,9 +203,15 @@ export function Button({
     danger: 'bg-danger-500 text-white hover:bg-danger-600 shadow-sm'
   };
   return (
-    <button className={`${base} ${sizes[size]} ${variants[variant]} ${className}`} {...props}>
+    <motion.button
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ duration: 0.15, ease: 'easeOut' }}
+      className={`${base} ${sizes[size]} ${variants[variant]} ${className}`}
+      {...(props as any)}
+    >
       {children}
-    </button>
+    </motion.button>
   );
 }
 
@@ -252,7 +259,16 @@ export function Select({ label, className = '', options, children, ...props }: R
    CARD
 ────────────────────────────────────────────────── */
 export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
-  return <div className={`card ${className}`}>{children}</div>;
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: 'easeOut' }}
+      className={`card ${className}`}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 /* ──────────────────────────────────────────────────
@@ -280,25 +296,43 @@ export function AiBadge() {
 export function Modal({ open, onClose, title, children, maxW = 'max-w-lg' }: {
   open: boolean; onClose: () => void; title?: string; children: ReactNode; maxW?: string;
 }) {
-  if (!open) return null;
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4"
-         style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(8px)' }}
-         onClick={onClose}>
-      <div className={`bg-white rounded-3xl shadow-2xl w-full ${maxW} animate-scale-in overflow-hidden`}
-           style={{ boxShadow: 'var(--shadow-modal)' }}
-           onClick={e => e.stopPropagation()}>
-        {title && (
-          <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
-            <h2 className="text-lg font-bold text-slate-800 tracking-tight">{title}</h2>
-            <button onClick={onClose} className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
-              <span className="text-xl leading-none">×</span>
-            </button>
-          </div>
-        )}
-        {children}
-      </div>
-    </div>
+    <AnimatePresence>
+      {open && (
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(8px)' }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.18 }}
+          onClick={onClose}
+          role="dialog"
+          aria-modal="true"
+          aria-label={title}
+        >
+          <motion.div
+            className={`bg-white rounded-3xl shadow-2xl w-full ${maxW} overflow-hidden`}
+            style={{ boxShadow: 'var(--shadow-modal)' }}
+            initial={{ opacity: 0, scale: 0.94, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            onClick={e => e.stopPropagation()}
+          >
+            {title && (
+              <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+                <h2 className="text-lg font-bold text-slate-800 tracking-tight">{title}</h2>
+                <button onClick={onClose} aria-label="Close dialog" className="p-1.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+                  <span className="text-xl leading-none">×</span>
+                </button>
+              </div>
+            )}
+            {children}
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }
 
