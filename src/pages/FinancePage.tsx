@@ -1,0 +1,347 @@
+import { useState, useEffect } from 'react';
+import {
+  DollarSign,
+  CreditCard,
+  History,
+  CheckCircle2,
+  XCircle,
+  AlertCircle,
+  Download,
+} from 'lucide-react';
+import { useAuth } from '../lib/auth';
+import {
+  FeeAssessment,
+  FeePayment,
+  getStudentAssessments,
+  getStudentPayments,
+  simulateOnlinePayment,
+} from '../lib/feeManagement';
+import { Spinner, Badge, formatDateTime } from '../components/ui';
+
+// ─────────────────────────────────────────
+// UI Helpers
+// ─────────────────────────────────────────
+function formatCurrency(amount: number, currency = 'USD') {
+  return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount);
+}
+
+const STATUS_COLORS: Record<string, 'green' | 'rose' | 'amber' | 'slate' | 'blue' | 'purple'> = {
+  active: 'green',
+  inactive: 'slate',
+  unpaid: 'rose',
+  partial: 'amber',
+  paid: 'green',
+  overdue: 'rose',
+  cancelled: 'slate',
+  pending: 'amber',
+  completed: 'green',
+  failed: 'rose',
+  refunded: 'purple',
+  requested: 'blue',
+  approved: 'green',
+  processed: 'slate',
+  rejected: 'rose',
+};
+
+// ─────────────────────────────────────────
+// MAIN COMPONENT
+// Admin fee management lives in Finance Hub; this page is student-only.
+// ─────────────────────────────────────────
+export default function FinancePage() {
+  const { profile } = useAuth();
+
+  if (!profile) return <div className="p-12 flex justify-center"><Spinner /></div>;
+
+  return (
+    <div className="space-y-8">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl font-black text-gradient-brand flex items-center gap-2 tracking-tight">
+            <DollarSign size={28} className="text-primary-600 drop-shadow-sm" />
+            Finance & Fees
+          </h1>
+          <p className="text-slate-500 font-medium">Your invoices, payments, and financial records</p>
+        </div>
+      </div>
+
+      <StudentFinanceView studentId={profile.id} />
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────
+// STUDENT VIEW
+// ─────────────────────────────────────────
+function StudentFinanceView({ studentId }: { studentId: string }) {
+  const [tab, setTab] = useState<'invoices' | 'history'>('invoices');
+  const [loading, setLoading] = useState(true);
+  const [assessments, setAssessments] = useState<FeeAssessment[]>([]);
+  const [payments, setPayments] = useState<FeePayment[]>([]);
+
+  // Payment Modal
+  const [payModal, setPayModal] = useState<{ show: boolean, assessment: FeeAssessment | null }>({ show: false, assessment: null });
+  const [payAmount, setPayAmount] = useState(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [paySuccess, setPaySuccess] = useState(false);
+
+  async function loadData() {
+    setLoading(true);
+    const [aRes, pRes] = await Promise.all([
+      getStudentAssessments(studentId),
+      getStudentPayments(studentId),
+    ]);
+    setAssessments(aRes.data || []);
+    setPayments(pRes.data || []);
+    setLoading(false);
+  }
+
+  useEffect(() => { loadData(); }, [studentId]);
+
+  function openPayModal(a: FeeAssessment) {
+    setPayModal({ show: true, assessment: a });
+    setPayAmount(a.amount_assessed - a.amount_paid);
+    setPaySuccess(false);
+  }
+
+  async function handlePay() {
+    if (!payModal.assessment) return;
+    const balance = payModal.assessment.amount_assessed - payModal.assessment.amount_paid;
+    if (payAmount <= 0 || payAmount > balance) return;
+    setIsProcessing(true);
+    const res = await simulateOnlinePayment(studentId, payModal.assessment.id, payAmount, 'online_gateway');
+    setIsProcessing(false);
+    if (!res.error) {
+      setPaySuccess(true);
+      loadData();
+    }
+  }
+
+  if (loading) return <div className="p-12 flex justify-center"><Spinner /></div>;
+
+  const totalDue = assessments.reduce((acc, a) => acc + (a.amount_assessed - a.amount_paid), 0);
+
+  return (
+    <div className="space-y-8">
+      {/* Student Summary */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-8 text-white shadow-xl relative overflow-hidden group">
+          <div className="absolute top-0 right-0 p-6 opacity-10 group-hover:scale-110 transition-transform duration-500">
+            <DollarSign size={100} />
+          </div>
+          <div className="relative z-10">
+            <p className="text-slate-400 font-bold tracking-widest text-xs uppercase mb-2">Total Outstanding Balance</p>
+            <h2 className="text-5xl font-black tracking-tight">{formatCurrency(totalDue)}</h2>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex items-center gap-2 p-1.5 bg-slate-100 rounded-2xl w-fit shadow-inner-soft">
+        {(['invoices', 'history'] as const).map(t => (
+          <button
+            key={t}
+            onClick={() => setTab(t)}
+            className={`px-6 py-2.5 rounded-xl text-sm font-bold transition-all duration-200 capitalize ${
+              tab === t ? 'bg-white text-primary-700 shadow-sm scale-100' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {/* INVOICES TAB */}
+      {tab === 'invoices' && (
+        <div className="grid md:grid-cols-2 gap-6 animate-fade-in">
+          {assessments.map(a => {
+            const balance = a.amount_assessed - a.amount_paid;
+            const isDue = balance > 0;
+            return (
+              <div key={a.id} className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-md transition-shadow relative overflow-hidden flex flex-col group">
+                <div className={`absolute top-0 left-0 right-0 h-1.5 ${isDue ? 'bg-gradient-to-r from-amber-400 to-rose-500' : 'bg-gradient-to-r from-emerald-400 to-emerald-600'}`} />
+                <div className="flex items-start justify-between mb-6 mt-2">
+                  <div>
+                    <h3 className="font-black text-slate-800 text-xl tracking-tight mb-1.5">{a.structure?.title}</h3>
+                    <div className="flex items-center gap-2 text-sm text-slate-500 font-medium">
+                      <Badge color={STATUS_COLORS[a.status]} className="shadow-sm">{a.status}</Badge>
+                      <span className="flex items-center gap-1"><History size={14} className="opacity-50" /> Due: {new Date(a.due_date).toLocaleDateString()}</span>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-slate-400 font-bold uppercase tracking-widest mb-1">Total</p>
+                    <p className="font-black text-slate-800 text-xl">{formatCurrency(a.amount_assessed)}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between p-5 bg-slate-50 rounded-2xl border border-slate-100 mt-auto">
+                  <div>
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Amount Paid</p>
+                    <p className="font-black text-success-600 text-lg">{formatCurrency(a.amount_paid)}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-1">Remaining</p>
+                    <p className={`font-black text-2xl tracking-tight ${isDue ? 'text-rose-600' : 'text-slate-400'}`}>{formatCurrency(balance)}</p>
+                  </div>
+                </div>
+
+                {isDue && (
+                  <button
+                    onClick={() => openPayModal(a)}
+                    className="w-full mt-6 flex items-center justify-center gap-2 py-3.5 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/20 transition-all active:scale-[0.98]"
+                  >
+                    <CreditCard size={18} /> Pay Now
+                  </button>
+                )}
+                {!isDue && (
+                  <div className="w-full mt-6 flex items-center justify-center gap-2 py-3.5 bg-success-50 text-success-700 rounded-xl font-bold border border-success-100">
+                    <CheckCircle2 size={18} /> Fully Paid
+                  </div>
+                )}
+              </div>
+            );
+          })}
+          {assessments.length === 0 && (
+            <div className="col-span-full py-20 text-center text-slate-400 border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50 flex flex-col items-center justify-center">
+              <div className="w-20 h-20 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mb-4">
+                <CheckCircle2 size={40} />
+              </div>
+              <p className="text-xl font-black text-slate-700 tracking-tight mb-1">You're all caught up!</p>
+              <p className="text-slate-500 font-medium">No pending invoices or fees.</p>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* HISTORY TAB */}
+      {tab === 'history' && (
+        <div className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-sm animate-fade-in">
+          <table className="w-full text-left text-sm text-slate-600">
+            <thead className="bg-slate-50 border-b border-slate-100 text-xs uppercase text-slate-400 font-black tracking-widest">
+              <tr>
+                <th className="px-6 py-4">Date</th>
+                <th className="px-6 py-4">Transaction ID</th>
+                <th className="px-6 py-4">Method</th>
+                <th className="px-6 py-4 text-right">Amount</th>
+                <th className="px-6 py-4 text-center">Status</th>
+                <th className="px-6 py-4 text-center">Receipt</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-50">
+              {payments.map(p => (
+                <tr key={p.id} className="hover:bg-slate-50/80 transition-colors group">
+                  <td className="px-6 py-4 whitespace-nowrap font-medium text-slate-500">{formatDateTime(p.created_at)}</td>
+                  <td className="px-6 py-4 font-bold font-mono text-xs text-slate-700 bg-slate-50/50 rounded px-2">{p.reference_number || 'N/A'}</td>
+                  <td className="px-6 py-4 font-medium uppercase tracking-wider text-xs text-slate-400">{p.payment_method.replace('_', ' ')}</td>
+                  <td className="px-6 py-4 text-right font-black text-slate-800">{formatCurrency(p.amount)}</td>
+                  <td className="px-6 py-4 text-center"><Badge color={STATUS_COLORS[p.status]} className="shadow-sm">{p.status}</Badge></td>
+                  <td className="px-6 py-4 text-center">
+                    {p.status === 'completed' && (
+                      <button className="p-2 text-primary-500 hover:bg-primary-50 rounded-xl transition-colors inline-flex items-center" title="Download Receipt">
+                        <Download size={18} />
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+              {payments.length === 0 && (
+                <tr><td colSpan={6} className="px-6 py-12 text-center text-slate-400 font-medium">No payment history.</td></tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* PAYMENT GATEWAY SIMULATION MODAL */}
+      {payModal.show && payModal.assessment && (
+        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative">
+            <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-emerald-400 to-teal-500 z-10" />
+            <div className="bg-slate-900 pt-8 pb-6 px-8 text-white relative">
+              <div className="absolute top-0 right-0 opacity-10 p-4">
+                <CreditCard size={120} />
+              </div>
+              <div className="flex justify-between items-start mb-6 relative z-10">
+                <div>
+                  <p className="text-emerald-400 text-xs font-black tracking-widest uppercase mb-1 flex items-center gap-1.5"><CheckCircle2 size={12}/> Secure Checkout</p>
+                  <h3 className="text-2xl font-black tracking-tight">{payModal.assessment.structure?.title}</h3>
+                </div>
+                {!isProcessing && !paySuccess && (
+                  <button onClick={() => setPayModal({ show: false, assessment: null })} className="text-slate-400 hover:text-white bg-white/10 hover:bg-white/20 p-1.5 rounded-full transition-colors backdrop-blur-sm">
+                    <XCircle size={20} />
+                  </button>
+                )}
+              </div>
+              <div className="text-5xl font-black tracking-tighter relative z-10">{formatCurrency(payAmount)}</div>
+            </div>
+
+            <div className="p-8 space-y-6">
+              {paySuccess ? (
+                <div className="text-center py-8 animate-fade-in">
+                  <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                    <CheckCircle2 size={40} className="text-emerald-600" />
+                  </div>
+                  <h3 className="text-2xl font-black text-slate-800 tracking-tight mb-2">Payment Successful!</h3>
+                  <p className="text-slate-500 font-medium mb-8">Your transaction has been processed and your invoice is updated.</p>
+                  <button onClick={() => setPayModal({ show: false, assessment: null })} className="w-full py-4 bg-slate-100 text-slate-800 font-black rounded-xl hover:bg-slate-200 transition-colors">
+                    Done
+                  </button>
+                </div>
+              ) : (
+                <>
+                  <div className="space-y-6">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">Amount to Pay</label>
+                      <div className="relative">
+                        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+                        <input
+                          type="number"
+                          className="w-full pl-8 pr-4 py-3.5 bg-slate-50 border border-slate-200 rounded-xl text-xl font-black focus:ring-2 focus:ring-emerald-500 transition-shadow outline-none"
+                          value={payAmount}
+                          max={payModal.assessment.amount_assessed - payModal.assessment.amount_paid}
+                          onChange={e => setPayAmount(Number(e.target.value))}
+                        />
+                      </div>
+                      <p className="text-xs text-slate-400 font-medium mt-2 flex items-center gap-1.5"><AlertCircle size={12}/> You can make a partial payment.</p>
+                    </div>
+
+                    <div className="p-5 rounded-2xl border-2 border-emerald-500 bg-emerald-50 relative overflow-hidden group cursor-default">
+                      <div className="flex items-center gap-4 relative z-10">
+                        <div className="p-3 bg-white rounded-xl shadow-sm">
+                          <CreditCard size={24} className="text-emerald-600" />
+                        </div>
+                        <div>
+                          <p className="font-black text-emerald-900 tracking-tight">Credit Card</p>
+                          <p className="text-sm font-bold text-emerald-700/80 font-mono mt-0.5">•••• •••• •••• 4242</p>
+                        </div>
+                      </div>
+                      <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-110 transition-transform duration-500">
+                        <CreditCard size={100} />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <button
+                      onClick={handlePay}
+                      disabled={isProcessing || payAmount <= 0 || payAmount > (payModal.assessment.amount_assessed - payModal.assessment.amount_paid)}
+                      className="w-full flex items-center justify-center gap-2 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 text-white rounded-xl font-black text-lg hover:from-emerald-600 hover:to-teal-700 disabled:opacity-50 transition-all shadow-lg shadow-emerald-500/25 active:scale-[0.98]"
+                    >
+                      {isProcessing ? (
+                        <><Spinner size="sm" /> Processing...</>
+                      ) : (
+                        <>Pay {formatCurrency(payAmount)}</>
+                      )}
+                    </button>
+                    <p className="text-center text-xs text-slate-400 font-medium mt-4">
+                      This is a simulated gateway. No real charges will occur.
+                    </p>
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
