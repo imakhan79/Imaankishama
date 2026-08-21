@@ -223,6 +223,11 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
       {/* ── Hero ── */}
       <section className="relative pt-32 pb-24 overflow-hidden"
                style={{ background: 'linear-gradient(135deg,#021730 0%,#052f5c 55%,#063b73 100%)' }}>
+        {/* Islamic geometric star pattern overlay */}
+        <div className="absolute inset-0 opacity-[0.07]" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='1'%3E%3Cpath d='M60 10 L74 46 L110 46 L81 68 L92 104 L60 82 L28 104 L39 68 L10 46 L46 46 Z'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '120px 120px',
+        }} />
         <div className="absolute top-16 left-1/5 w-72 h-72 rounded-full opacity-20 animate-float" style={{ background: 'radial-gradient(circle,#0878f9,transparent 70%)' }} />
         <div className="absolute bottom-10 right-1/5 w-64 h-64 rounded-full opacity-15" style={{ background: 'radial-gradient(circle,#3894fc,transparent 70%)', animation: 'float 8s ease-in-out infinite reverse' }} />
         <div className="absolute top-1/3 right-10 w-40 h-40 rounded-full opacity-10" style={{ background: 'radial-gradient(circle,#9fc1dd,transparent 70%)', animation: 'float 10s ease-in-out infinite' }} />
@@ -260,30 +265,22 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <button onClick={onGetStarted}
-              className="px-7 py-3.5 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95"
+              className="px-8 py-4 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95"
               style={{ background: 'linear-gradient(135deg,#0878f9,#0660c9)', boxShadow: '0 8px 32px rgba(8,120,249,0.5)' }}>
               Get Started <ArrowRight size={16}/>
             </button>
             <a href="#courses"
-              className="px-7 py-3.5 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-105"
+              className="px-8 py-4 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-105"
               style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', backdropFilter: 'blur(10px)' }}>
               <Play size={15} className="fill-white"/> Explore Courses
             </a>
-            <button onClick={onGetStarted}
-              className="px-7 py-3.5 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-105"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', color: 'white' }}>
-              Login
-            </button>
-            <button onClick={onGetStarted}
-              className="px-7 py-3.5 rounded-2xl text-sm font-bold flex items-center justify-center gap-2 transition-all hover:scale-105"
-              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.15)', color: 'white' }}>
-              <GraduationCap size={15}/> Student Portal
-            </button>
           </div>
           <p className="mt-5 text-white/50 text-sm">No credit card required · Free demo accounts available</p>
 
           {/* Hero dashboard preview mock */}
           <div className="mt-16 relative max-w-4xl mx-auto">
+            <div className="absolute -inset-1 rounded-[2rem] opacity-40 blur-2xl -z-10"
+                 style={{ background: 'linear-gradient(135deg,#0878f9,#063b73)' }} />
             <div className="rounded-3xl overflow-hidden"
                  style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)', boxShadow: '0 40px 120px rgba(0,0,0,0.5)' }}>
               <div className="bg-black/20 px-4 py-3 flex items-center gap-2 border-b border-white/10">
