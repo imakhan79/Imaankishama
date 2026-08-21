@@ -156,7 +156,7 @@ export default function ProfilePage() {
       {/* Profile Hero Card */}
       <div className="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
         {/* Banner */}
-        <div className="h-28 bg-gradient-to-r from-primary-500 via-primary-600 to-violet-600 relative">
+        <div className="h-28 bg-gradient-to-r from-primary-700 via-primary-600 to-accent-500 relative">
           <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 30% 50%, white 1px, transparent 1px)', backgroundSize: '24px 24px' }} />
         </div>
 
