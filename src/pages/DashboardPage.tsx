@@ -377,7 +377,7 @@ function AdminDashboard({ data }: { data: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6">
         <ChartCard title="New User Growth (6 Months)">
           <div className="py-2">
-            <BarChart data={(data.growthByMonth || []).map((g: any) => ({ label: g.label, value: g.users }))} color="#f59e0b" />
+            <BarChart data={(data.growthByMonth || []).map((g: any) => ({ label: g.label, value: g.users }))} color="#063b73" />
           </div>
         </ChartCard>
         <ChartCard title="New Enrollments (6 Months)">
@@ -494,8 +494,9 @@ function StudentDashboard({ data, firstName, onNavigate }: { data: any; firstNam
       {/* Greeting hero */}
       <div className="hero-banner-dark rounded-3xl p-6 sm:p-7 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-56 h-56 rounded-full opacity-20 -translate-y-1/3 translate-x-1/4"
-             style={{ background: 'radial-gradient(circle,#f59e0b,transparent 70%)' }} />
+             style={{ background: 'radial-gradient(circle,#0878f9,transparent 70%)' }} />
         <div className="relative z-10">
+          <p className="text-accent-300 text-sm font-semibold mb-1">Assalamu Alaikum,</p>
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Welcome back, {firstName}</h1>
           <p className="text-slate-300 mt-1.5">
             {dueToday > 0 ? `You have ${dueToday} lecture${dueToday === 1 ? '' : 's'} to complete today.` : "You're all caught up — great work!"}
@@ -506,7 +507,7 @@ function StudentDashboard({ data, firstName, onNavigate }: { data: any; firstNam
       {/* Progress rings */}
       <div className="grid grid-cols-2 gap-4 sm:gap-5">
         <div className="card p-6 flex items-center justify-center">
-          <ProgressRing value={data.avgProgress} color="#f59e0b" label="Overall Progress" />
+          <ProgressRing value={data.avgProgress} color="#0878f9" label="Overall Progress" />
         </div>
         <div className="card p-6 flex items-center justify-center">
           <ProgressRing value={data.avgScore} color="#059669" label="Average Score" />
@@ -665,7 +666,7 @@ function AiAssistantCard() {
       </span>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <p className="font-bold text-slate-800">ZiLearn AI Assistant</p>
+          <p className="font-bold text-slate-800">Imaan Ki Shama AI Assistant</p>
           <Sparkles size={14} className="text-primary-500" />
         </div>
         <p className="text-sm text-slate-500">Personalized study help is coming soon.</p>

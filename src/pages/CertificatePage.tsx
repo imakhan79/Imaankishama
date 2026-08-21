@@ -141,7 +141,7 @@ export default function CertificatePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl font-black text-gradient-brand flex items-center gap-2 tracking-tight">
-            <Award size={28} className="text-amber-500 drop-shadow-sm" />
+            <Award size={28} className="text-accent-500 drop-shadow-sm" />
             My Certificates
           </h1>
           <p className="text-slate-500 font-medium">
@@ -164,8 +164,8 @@ export default function CertificatePage() {
 
       {profile.role !== 'student' ? (
         <div className="py-24 text-center border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50 flex flex-col items-center justify-center gap-4">
-          <div className="w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center">
-            <Award size={40} className="text-amber-400" />
+          <div className="w-20 h-20 rounded-full bg-accent-100 flex items-center justify-center">
+            <Award size={40} className="text-accent-500" />
           </div>
           <div>
             <p className="text-xl font-black text-slate-600 tracking-tight">Certificates are for students</p>
@@ -176,8 +176,8 @@ export default function CertificatePage() {
         <div className="p-12 flex justify-center"><Spinner /></div>
       ) : filtered.length === 0 ? (
         <div className="py-24 text-center border-2 border-dashed border-slate-200 rounded-3xl bg-slate-50 flex flex-col items-center justify-center gap-4">
-          <div className="w-20 h-20 rounded-full bg-amber-100 flex items-center justify-center">
-            <GraduationCap size={40} className="text-amber-400" />
+          <div className="w-20 h-20 rounded-full bg-accent-100 flex items-center justify-center">
+            <GraduationCap size={40} className="text-accent-500" />
           </div>
           <div>
             <p className="text-xl font-black text-slate-600 tracking-tight">
@@ -199,7 +199,7 @@ export default function CertificatePage() {
                 onClick={() => setPreviewCert(cert)}
               >
                 {/* Certificate decorative header */}
-                <div className="bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 p-6 relative overflow-hidden">
+                <div className="bg-gradient-to-r from-primary-700 via-primary-600 to-accent-500 p-6 relative overflow-hidden">
                   <div className="absolute top-0 right-0 opacity-15 p-3 group-hover:scale-110 transition-transform duration-500">
                     <Award size={100} />
                   </div>
@@ -267,24 +267,24 @@ export default function CertificatePage() {
         <div className="fixed inset-0 bg-slate-900/70 backdrop-blur-md z-50 flex items-center justify-center p-4 animate-fade-in" onClick={() => setPreviewCert(null)}>
           <div className="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden" onClick={e => e.stopPropagation()}>
             {/* Certificate */}
-            <div className="relative bg-gradient-to-br from-amber-50 via-yellow-50 to-amber-100 p-12 text-center border-8 border-amber-200 m-6 rounded-2xl overflow-hidden">
+            <div className="relative bg-gradient-to-br from-white via-accent-50 to-accent-100 p-12 text-center border-8 border-accent-200 m-6 rounded-2xl overflow-hidden">
               {/* Decorative corners */}
-              <div className="absolute top-3 left-3 w-12 h-12 border-t-4 border-l-4 border-amber-400 rounded-tl-xl" />
-              <div className="absolute top-3 right-3 w-12 h-12 border-t-4 border-r-4 border-amber-400 rounded-tr-xl" />
-              <div className="absolute bottom-3 left-3 w-12 h-12 border-b-4 border-l-4 border-amber-400 rounded-bl-xl" />
-              <div className="absolute bottom-3 right-3 w-12 h-12 border-b-4 border-r-4 border-amber-400 rounded-br-xl" />
+              <div className="absolute top-3 left-3 w-12 h-12 border-t-4 border-l-4 border-accent-400 rounded-tl-xl" />
+              <div className="absolute top-3 right-3 w-12 h-12 border-t-4 border-r-4 border-accent-400 rounded-tr-xl" />
+              <div className="absolute bottom-3 left-3 w-12 h-12 border-b-4 border-l-4 border-accent-400 rounded-bl-xl" />
+              <div className="absolute bottom-3 right-3 w-12 h-12 border-b-4 border-r-4 border-accent-400 rounded-br-xl" />
               {/* Background watermark */}
               <div className="absolute inset-0 flex items-center justify-center opacity-5">
-                <Award size={300} className="text-amber-600" />
+                <Award size={300} className="text-primary-700" />
               </div>
 
               <div className="relative z-10 space-y-4">
                 <div className="flex justify-center mb-2">
-                  <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg">
+                  <div className="w-16 h-16 bg-gradient-to-br from-primary-700 to-accent-500 rounded-2xl flex items-center justify-center shadow-lg">
                     <Award size={32} className="text-white" />
                   </div>
                 </div>
-                <p className="text-xs font-black tracking-[0.4em] uppercase text-amber-700">Certificate of Completion</p>
+                <p className="text-xs font-black tracking-[0.4em] uppercase text-primary-700">Certificate of Completion</p>
                 <p className="text-slate-500 font-medium text-sm">This is to certify that</p>
                 <p className="text-3xl font-black text-slate-900 tracking-tight">{profile.full_name || profile.email}</p>
                 <p className="text-slate-500 font-medium text-sm">has successfully completed</p>
@@ -294,18 +294,18 @@ export default function CertificatePage() {
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Grade</p>
                     <p className="text-2xl font-black text-slate-800">{previewCert.grade}%</p>
                   </div>
-                  <div className="w-px h-10 bg-amber-300" />
+                  <div className="w-px h-10 bg-accent-300" />
                   <div className="text-center">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Completed</p>
                     <p className="text-sm font-black text-slate-800">{new Date(previewCert.completedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                   </div>
-                  <div className="w-px h-10 bg-amber-300" />
+                  <div className="w-px h-10 bg-accent-300" />
                   <div className="text-center">
                     <p className="text-xs font-bold text-slate-400 uppercase tracking-widest">Instructor</p>
                     <p className="text-sm font-black text-slate-800 max-w-[100px] truncate">{previewCert.instructor}</p>
                   </div>
                 </div>
-                <p className="text-xs font-mono text-slate-400 tracking-widest pt-4 border-t border-amber-200">{previewCert.certId}</p>
+                <p className="text-xs font-mono text-slate-400 tracking-widest pt-4 border-t border-accent-200">{previewCert.certId}</p>
               </div>
             </div>
 
@@ -316,7 +316,7 @@ export default function CertificatePage() {
               </button>
               <button
                 onClick={() => downloadCertificate(previewCert, profile.full_name || profile.email)}
-                className="flex-1 py-3 bg-amber-500 text-white rounded-xl font-bold hover:bg-amber-600 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-amber-500/25"
+                className="flex-1 py-3 bg-accent-500 text-white rounded-xl font-bold hover:bg-accent-600 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-accent-500/25"
               >
                 <Download size={18} /> Download PDF
               </button>

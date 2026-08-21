@@ -235,10 +235,10 @@ export default function ExamsPage() {
                         <FileText size={14} /> Setup
                       </Button>
                       {e.hasEssay && (
-                        <Button size="sm" variant="primary" className="flex-1 min-w-[88px] bg-amber-50 text-amber-700 hover:bg-amber-100 relative" onClick={() => setGrading(e)}>
+                        <Button size="sm" variant="primary" className="flex-1 min-w-[88px] bg-warning-50 text-warning-600 hover:bg-warning-100 relative" onClick={() => setGrading(e)}>
                           <UserCheck size={14} /> Grade
                           {!!e.pendingGrading && (
-                            <span className="absolute -top-1.5 -right-1.5 bg-amber-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold min-w-[18px] text-center">
+                            <span className="absolute -top-1.5 -right-1.5 bg-warning-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold min-w-[18px] text-center">
                               {e.pendingGrading}
                             </span>
                           )}

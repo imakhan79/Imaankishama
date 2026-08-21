@@ -168,7 +168,7 @@ export default function AssignmentsPage({ onNavigate }: { onNavigate?: (id: stri
 
             return (
               <div key={a.id} className="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm flex flex-col card-hover relative overflow-hidden group">
-                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 to-orange-500" />
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600" />
                 <div className="flex items-start justify-between gap-3 mb-4 mt-2">
                   {role !== 'student' ? (
                     <Badge color={a.status === 'published' ? 'success' : a.status === 'closed' ? 'slate' : 'warning'}>{a.status}</Badge>

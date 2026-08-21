@@ -8,12 +8,12 @@ const CATEGORIES = ['General', 'Science', 'Mathematics', 'Engineering', 'Humanit
 
 // Deterministic gradient per course id for thumbnail backgrounds
 const GRADIENTS = [
-  'from-blue-500 via-indigo-500 to-purple-600',
-  'from-emerald-400 via-teal-500 to-cyan-600',
-  'from-orange-400 via-rose-500 to-pink-600',
-  'from-violet-500 via-purple-500 to-indigo-600',
-  'from-amber-400 via-orange-500 to-red-500',
-  'from-sky-400 via-blue-500 to-indigo-500',
+  'from-primary-700 via-primary-600 to-accent-500',
+  'from-accent-500 via-accent-600 to-primary-700',
+  'from-primary-800 via-primary-600 to-accent-400',
+  'from-accent-600 via-primary-700 to-primary-900',
+  'from-primary-600 via-accent-500 to-accent-300',
+  'from-primary-900 via-primary-700 to-accent-500',
 ];
 
 function courseGradient(id: string) {

@@ -183,7 +183,7 @@ export default function LecturesPage({ onNavigate }: { onNavigate?: (id: string)
                           </button>
                         )}
                         {role === 'professor' && m.type === 'worksheet' && (
-                          <button onClick={() => setGradingWorksheet(m)} className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-amber-50 text-amber-700 hover:bg-amber-100">
+                          <button onClick={() => setGradingWorksheet(m)} className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 bg-warning-50 text-warning-600 hover:bg-warning-100">
                             <PenLine size={12} /> Submissions
                           </button>
                         )}
