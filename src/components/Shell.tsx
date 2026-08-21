@@ -100,7 +100,7 @@ function NavContent({
                  className="h-8 w-auto object-contain" />
           </div>
           <div>
-            <p className="text-slate-400 text-xs">{roleLabel} Portal</p>
+            <p className="text-slate-200 text-xs font-medium">{roleLabel} Portal</p>
           </div>
         </div>
         {onClose && (
@@ -115,7 +115,7 @@ function NavContent({
         {navGroups.map(g => (
           <div key={g.id}>
             {g.id !== 'main' && (
-              <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest px-3 mb-1.5">{g.label}</p>
+              <p className="text-[10px] font-bold text-slate-300 uppercase tracking-widest px-3 mb-1.5">{g.label}</p>
             )}
             <div className="space-y-0.5">
               {g.items.map(item => {
@@ -132,7 +132,7 @@ function NavContent({
                       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
                         isActive
                           ? 'text-white'
-                          : 'text-slate-400 hover:bg-white/8 hover:text-white'
+                          : 'text-slate-300 hover:bg-white/8 hover:text-white'
                       }`}
                       style={isActive ? {
                         background: 'linear-gradient(135deg,#0878f9,#0660c9)',
@@ -170,7 +170,7 @@ function NavContent({
                               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group relative ${
                                 childIsActive
                                   ? 'text-white'
-                                  : 'text-slate-400 hover:bg-white/8 hover:text-white'
+                                  : 'text-slate-300 hover:bg-white/8 hover:text-white'
                               }`}
                               style={childIsActive ? {
                                 background: 'linear-gradient(135deg,#0878f9,#0660c9)',
@@ -203,7 +203,7 @@ function NavContent({
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-semibold text-white truncate">{fullName}</p>
-            <p className="text-xs text-slate-400 truncate">{email}</p>
+            <p className="text-xs text-slate-300 truncate">{email}</p>
           </div>
           <button onClick={signOut} aria-label="Sign out"
             className="text-slate-400 hover:text-red-400 p-1.5 rounded-lg hover:bg-white/10 transition-colors shrink-0">
