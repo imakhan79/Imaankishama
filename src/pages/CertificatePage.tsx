@@ -49,7 +49,7 @@ function downloadCertificate(cert: CertRecord, studentName: string) {
     .certid { margin-top: 30px; font-size: 11px; letter-spacing: 2px; color: #94a3b8; }
   </style></head><body>
     <div class="cert">
-      <img class="cert-logo" src="${window.location.origin}/assets/ziconlogo.jpeg" alt="ZiLearn" />
+      <img class="cert-logo" src="${window.location.origin}/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" />
       <p class="kicker">Certificate of Completion</p>
       <p class="sub">This is to certify that</p>
       <p class="name">${studentName}</p>

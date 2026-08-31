@@ -95,11 +95,11 @@ function NavContent({
       <div className="px-5 py-5 flex items-center justify-between border-b border-white/8">
         <div className="flex items-center gap-3">
           <div className="bg-white rounded-xl px-2 py-1.5 shrink-0 shadow-sm">
-            <img src="/assets/ziconlogo.jpeg" alt="ZiLearn"
+            <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama"
                  className="h-6 w-auto object-contain" />
           </div>
           <div>
-            <p className="text-white font-bold text-sm tracking-tight">ZiLearn</p>
+            <p className="text-white font-bold text-sm tracking-tight">Iman Ki Shama</p>
             <p className="text-slate-400 text-xs">{roleLabel} Portal</p>
           </div>
         </div>
@@ -333,9 +333,9 @@ export default function Shell({
                 <Menu size={18} />
               </button>
               <div className="lg:hidden flex items-center gap-2">
-                <img src="/assets/ziconlogo.jpeg" alt="ZiLearn"
+                <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama"
                      className="h-7 w-auto object-contain" />
-                <span className="font-bold text-slate-800 text-sm">ZiLearn</span>
+                <span className="font-bold text-slate-800 text-sm">Iman Ki Shama</span>
               </div>
               <div className="hidden lg:flex items-center gap-2">
                 <span className="text-slate-400 text-sm">/</span>

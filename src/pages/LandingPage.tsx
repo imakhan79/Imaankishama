@@ -63,7 +63,7 @@ const PROCESS_STEPS = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Ngozi Umeh',    role: 'Grade 11 Student',       text: 'ZiLearn made math finally click for me. The practice quizzes after every lesson are a game changer.' },
+  { name: 'Ngozi Umeh',    role: 'Grade 11 Student',       text: 'Iman Ki Shama made math finally click for me. The practice quizzes after every lesson are a game changer.' },
   { name: 'Mr. Tunde Bakare', role: 'Physics Teacher',     text: 'Managing assignments and grading is so much faster now. My students are more engaged than ever.' },
   { name: 'Aisha Mohammed', role: 'Parent',                text: 'I love being able to see my son\'s attendance and grades in real time from the parent dashboard.' },
 ];
@@ -84,16 +84,16 @@ const LATEST_COURSES = [
 ];
 
 const NEWS = [
-  { title: 'ZiLearn launches AI-assisted revision tools', date: 'Jul 2026', icon: <Sparkles size={20}/> },
+  { title: 'Iman Ki Shama launches AI-assisted revision tools', date: 'Jul 2026', icon: <Sparkles size={20}/> },
   { title: 'New live-class integrations for teachers',    date: 'Jun 2026', icon: <Radio size={20}/> },
-  { title: 'ZiLearn partners with 12 new schools',        date: 'May 2026', icon: <School size={20}/> },
+  { title: 'Iman Ki Shama partners with 12 new schools',        date: 'May 2026', icon: <School size={20}/> },
 ];
 
 const FAQS = [
-  { q: 'Is ZiLearn suitable for all grade levels?',    a: 'Yes — ZiLearn supports courses for primary, secondary, and vocational learners, with content organized by subject and level.' },
+  { q: 'Is Iman Ki Shama suitable for all grade levels?',    a: 'Yes — Iman Ki Shama supports courses for primary, secondary, and vocational learners, with content organized by subject and level.' },
   { q: 'Are certificates verifiable?',                  a: 'Every certificate carries a unique certificate ID that can be verified from your dashboard once a course is completed.' },
   { q: 'Can parents track their child\'s progress?',    a: 'Yes, parents get their own dashboard view with attendance, grades, and course progress.' },
-  { q: 'Does ZiLearn work on mobile devices?',           a: 'Yes, ZiLearn is fully responsive and works smoothly on phones, tablets, laptops, and desktops.' },
+  { q: 'Does Iman Ki Shama work on mobile devices?',           a: 'Yes, Iman Ki Shama is fully responsive and works smoothly on phones, tablets, laptops, and desktops.' },
 ];
 
 /* ──────────────────────────────────────────────────
@@ -171,7 +171,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <div className="flex items-center gap-2.5">
             <div className="bg-white rounded-xl px-1.5 py-1 shadow-sm ring-1 ring-slate-100 shrink-0">
-              <img src="/assets/ziconlogo.jpeg" alt="ZiLearn" className="h-7 w-auto object-contain" />
+              <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" className="h-7 w-auto object-contain" />
             </div>
           </div>
           <div className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
@@ -241,7 +241,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
             <div className="bg-white rounded-2xl px-3 py-2 shadow-lg">
-              <img src="/assets/ziconlogo.jpeg" alt="ZiLearn" className="h-10 sm:h-12 w-auto object-contain" />
+              <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" className="h-10 sm:h-12 w-auto object-contain" />
             </div>
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
@@ -256,7 +256,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             </span>
           </h1>
           <p className="text-lg sm:text-xl text-white/75 mb-10 max-w-2xl mx-auto leading-relaxed">
-            ZiLearn brings courses, live classes, assignments, analytics, and verified certificates together in one beautifully designed platform.
+            Iman Ki Shama brings courses, live classes, assignments, analytics, and verified certificates together in one beautifully designed platform.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <button onClick={onGetStarted}
@@ -294,7 +294,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                 </div>
                 <div className="flex-1 flex justify-center">
                   <div className="px-4 py-1 rounded-lg text-xs text-white/50" style={{ background: 'rgba(255,255,255,0.05)' }}>
-                    ZiLearn Dashboard
+                    Iman Ki Shama Dashboard
                   </div>
                 </div>
               </div>
@@ -331,7 +331,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <Eyebrow>Featured Courses</Eyebrow>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Learn from ZiLearn's Best</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Learn from Iman Ki Shama's Best</h2>
             <p className="text-slate-500 mt-3 max-w-xl mx-auto">A sample of courses our students are learning right now.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -396,11 +396,11 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         </div>
       </section>
 
-      {/* ── Why Choose ZiLearn ── */}
+      {/* ── Why Choose Iman Ki Shama ── */}
       <section id="features" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Eyebrow>Why Choose ZiLearn</Eyebrow>
+            <Eyebrow>Why Choose Iman Ki Shama</Eyebrow>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Everything You Need to Learn</h2>
             <p className="text-slate-500 mt-3 max-w-xl mx-auto">Built for students, teachers, parents, and administrators alike.</p>
           </div>
@@ -450,7 +450,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <Eyebrow>See It In Action</Eyebrow>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">A Peek Inside ZiLearn</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">A Peek Inside Iman Ki Shama</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="card p-6">
@@ -506,7 +506,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-black text-white">Loved by Students, Teachers & Parents</h2>
-            <p className="text-white/60 mt-3">Real feedback from the ZiLearn community</p>
+            <p className="text-white/60 mt-3">Real feedback from the Iman Ki Shama community</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t, i) => (
@@ -574,7 +574,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <Eyebrow>News</Eyebrow>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Latest from ZiLearn</h2>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Latest from Iman Ki Shama</h2>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {NEWS.map((n, i) => (
@@ -644,7 +644,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
       <section className="py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mb-4 tracking-tight">Ready to Start Learning?</h2>
-          <p className="text-lg text-slate-500 mb-8">Join thousands of students and teachers already growing with ZiLearn.</p>
+          <p className="text-lg text-slate-500 mb-8">Join thousands of students and teachers already growing with Iman Ki Shama.</p>
           <button onClick={onGetStarted}
             className="px-10 py-4 rounded-2xl text-white font-bold text-lg hover:scale-105 active:scale-95 transition-all"
             style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', boxShadow: '0 8px 32px rgba(217,119,6,0.4)' }}>
@@ -659,10 +659,10 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
             <div className="col-span-2">
               <div className="bg-white rounded-xl px-2 py-1.5 inline-block mb-4">
-                <img src="/assets/ziconlogo.jpeg" alt="ZiLearn" className="h-8 w-auto object-contain" />
+                <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" className="h-8 w-auto object-contain" />
               </div>
               <p className="text-white/50 text-sm leading-relaxed max-w-xs mb-4">
-                A modern, AI-powered learning management system by Zicon Technology.
+                A modern, AI-powered learning management system by Iman Ki Shama.
               </p>
               <div className="flex gap-3">
                 {[Share2, AtSign, Link2, Camera].map((Icon, i) => (
@@ -697,7 +697,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             </div>
           </div>
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8 border-t border-white/10">
-            <p className="text-white/40 text-xs">© 2026 ZiLearn by Zicon Technology. All rights reserved.</p>
+            <p className="text-white/40 text-xs">© 2026 Iman Ki Shama by Iman Ki Shama. All rights reserved.</p>
             <div className="flex gap-5 text-xs text-white/40">
               <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
               <a href="#" className="hover:text-white transition-colors">Terms of Service</a>

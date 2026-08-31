@@ -89,7 +89,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
         <div className="hidden lg:flex flex-1 flex-col justify-center max-w-md text-white animate-fade-up">
           <div className="flex items-center gap-2 mb-6">
             <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
-            <span className="text-xs font-bold tracking-widest uppercase text-white/80">ZiLearn LMS</span>
+            <span className="text-xs font-bold tracking-widest uppercase text-white/80">Iman Ki Shama</span>
           </div>
           <h1 className="text-4xl font-black leading-tight tracking-tight mb-4">
             Learning made<br />
@@ -138,7 +138,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
 
         {/* Logo + brand */}
         <div className="flex justify-center mb-6">
-          <img src="/assets/ziconlogo.jpeg" alt="ZiLearn" className="h-14 sm:h-16 w-auto object-contain" />
+          <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" className="h-14 sm:h-16 w-auto object-contain" />
         </div>
 
         {/* Tab switcher */}
@@ -162,9 +162,9 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
           </h2>
           <p className="text-slate-500 text-sm mt-2 leading-relaxed">
             {mode === 'login' ? (
-              <>Sign in to continue your learning journey with{' '}<span className="text-amber-600 font-semibold">ZiLearn</span>.</>
+              <>Sign in to continue your learning journey with{' '}<span className="text-amber-600 font-semibold">Iman Ki Shama</span>.</>
             ) : mode === 'register' ? (
-              <>Join <span className="text-amber-600 font-semibold">ZiLearn</span> and start learning today.</>
+              <>Join <span className="text-amber-600 font-semibold">Iman Ki Shama</span> and start learning today.</>
             ) : (
               "Enter your email and we'll send a reset link"
             )}
@@ -296,7 +296,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
         )}
 
         <p className="text-[11px] text-slate-400 text-center mt-8 tracking-wide">
-          © 2026 ZILEARN BY ZICON TECHNOLOGY
+          © 2026 IMAN KI SHAMA
         </p>
       </div>
       </div>

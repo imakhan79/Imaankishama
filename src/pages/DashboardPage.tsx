@@ -665,7 +665,7 @@ function AiAssistantCard() {
       </span>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
-          <p className="font-bold text-slate-800">ZiLearn AI Assistant</p>
+          <p className="font-bold text-slate-800">Iman Ki Shama AI Assistant</p>
           <Sparkles size={14} className="text-primary-500" />
         </div>
         <p className="text-sm text-slate-500">Personalized study help is coming soon.</p>

@@ -61,7 +61,7 @@ function AppInner() {
     return (
       <div className="min-h-screen bg-mesh flex flex-col items-center justify-center gap-6">
         <div className="bg-white rounded-2xl px-4 py-3 shadow-lg">
-          <img src="/assets/ziconlogo.jpeg" alt="ZiLearn" className="h-9 w-auto object-contain" />
+          <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" className="h-9 w-auto object-contain" />
         </div>
         <Spinner />
       </div>
