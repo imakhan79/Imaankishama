@@ -5,7 +5,7 @@ import {
   Sparkles, Radio, Menu, X, ChevronDown, Calculator, Languages as LanguagesIcon,
   Cpu, Brain, Globe2, Briefcase, Code2, FlaskConical, ClipboardCheck, Gamepad2, Smartphone,
   UserCog, LineChart, PenLine, Trophy, School, FileCheck2, Bot, Mail, MapPin,
-  Share2, AtSign, Link2, Camera, PlayCircle,
+  Share2, AtSign, Link2, Camera, PlayCircle, BookMarked, Moon, Scale, Heart, Sunrise, MessageCircle,
 } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────
@@ -21,23 +21,26 @@ const TRUSTED_STATS = [
 ];
 
 const CATEGORIES = [
-  { label: 'Mathematics', icon: <Calculator size={22}/> },
-  { label: 'English',     icon: <PenLine size={22}/> },
-  { label: 'Science',     icon: <FlaskConical size={22}/> },
-  { label: 'Computer',    icon: <Cpu size={22}/> },
-  { label: 'AI',          icon: <Brain size={22}/> },
-  { label: 'Languages',   icon: <LanguagesIcon size={22}/> },
-  { label: 'Business',    icon: <Briefcase size={22}/> },
-  { label: 'Programming', icon: <Code2 size={22}/> },
+  { label: 'Quran',        icon: <BookMarked size={22}/> },
+  { label: 'Tafseer',      icon: <BookOpen size={22}/> },
+  { label: 'Aqeedah',      icon: <Moon size={22}/> },
+  { label: 'Seerah',       icon: <Users size={22}/> },
+  { label: 'Fiqh',         icon: <Scale size={22}/> },
+  { label: 'Akhlaq',       icon: <Heart size={22}/> },
+  { label: 'Daily Iman',   icon: <Sunrise size={22}/> },
+  { label: 'Duas & Dhikr', icon: <MessageCircle size={22}/> },
 ];
 
-const FEATURED_COURSES = [
-  { title: 'Algebra & Functions Mastery',   subject: 'Mathematics', teacher: 'Mr. Daniel Obi',     rating: 4.9, lessons: 32, duration: '18h', progress: 68, icon: <Calculator size={20}/> },
-  { title: 'Creative Writing & Grammar',     subject: 'English',     teacher: 'Ms. Amara Bello',     rating: 4.8, lessons: 24, duration: '14h', progress: 40, icon: <PenLine size={20}/> },
-  { title: 'Physics: Forces & Motion',       subject: 'Science',     teacher: 'Dr. Kunle Adeyemi',   rating: 4.9, lessons: 28, duration: '20h', progress: 82, icon: <FlaskConical size={20}/> },
-  { title: 'Intro to Python Programming',    subject: 'Computer',    teacher: 'Mr. Chidi Nwosu',     rating: 5.0, lessons: 36, duration: '22h', progress: 25, icon: <Code2 size={20}/> },
-  { title: 'Foundations of Machine Learning',subject: 'AI',          teacher: 'Dr. Ifeoma Chukwu',   rating: 4.9, lessons: 30, duration: '26h', progress: 12, icon: <Brain size={20}/> },
-  { title: 'Business & Entrepreneurship 101',subject: 'Business',    teacher: 'Mrs. Grace Okafor',   rating: 4.7, lessons: 20, duration: '12h', progress: 55, icon: <Briefcase size={20}/> },
+// Real scholars & tafseer works sourced from the course's own reference list
+// (Contant Vedio lactures.pdf) — no fabricated ratings/stats attached to
+// scholarly work, per the project's content-governance rule.
+const FEATURED_SCHOLARS = [
+  { name: 'Mufti Muhammad Shafi Usmani', work: 'Ma’ariful Quran',   note: 'Comprehensive Urdu tafseer',        icon: <BookMarked size={20}/> },
+  { name: 'Mufti Taqi Usmani',           work: 'Asan Tarjuma Quran',     note: 'Accessible Quran translation',      icon: <BookOpen size={20}/> },
+  { name: 'Dr. Israr Ahmed',             work: 'Bayan-ul-Quran',         note: 'Thematic Quranic exposition',       icon: <Sparkles size={20}/> },
+  { name: 'Maulana Abul Ala Maududi',    work: 'Tafheem-ul-Quran',       note: 'Contextual, contemporary tafseer',  icon: <Brain size={20}/> },
+  { name: 'Maulana Aasif Qasmi Nanotwi', work: 'Baseerat-ul-Quran',      note: 'Translation & tafseer app',         icon: <Smartphone size={20}/> },
+  { name: 'Ustad Shujauddin Shaikh',     work: 'Qurani Dars',            note: 'Live Quranic lessons',              icon: <GraduationCap size={20}/> },
 ];
 
 const FEATURES = [
@@ -64,9 +67,9 @@ const PROCESS_STEPS = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Ngozi Umeh',    role: 'Grade 11 Student',       text: 'Iman Ki Shama made math finally click for me. The practice quizzes after every lesson are a game changer.' },
-  { name: 'Mr. Tunde Bakare', role: 'Physics Teacher',     text: 'Managing assignments and grading is so much faster now. My students are more engaged than ever.' },
-  { name: 'Aisha Mohammed', role: 'Parent',                text: 'I love being able to see my son\'s attendance and grades in real time from the parent dashboard.' },
+  { name: 'Sample Student',    role: 'University Student',       text: 'The daily reflection questions helped me actually connect the ayah to my own life, not just read it.' },
+  { name: 'Sample Instructor', role: 'Course Instructor',     text: 'Having the assignment, quiz, and scholar lectures all attached to the same ayah keeps the whole class focused.' },
+  { name: 'Sample Parent', role: 'Parent',                text: 'I like that every lesson names its scholar and source — nothing feels made up or unsourced.' },
 ];
 
 const ACHIEVEMENTS = [
@@ -85,9 +88,9 @@ const LATEST_COURSES = [
 ];
 
 const NEWS = [
-  { title: 'Iman Ki Shama launches AI-assisted revision tools', date: 'Jul 2026', icon: <Sparkles size={20}/> },
-  { title: 'New live-class integrations for teachers',    date: 'Jun 2026', icon: <Radio size={20}/> },
-  { title: 'Iman Ki Shama partners with 12 new schools',        date: 'May 2026', icon: <School size={20}/> },
+  { title: 'Chapter 1 (Surah An-Nisa 4:136) now live with full scholar resources', date: 'Aug 2026', icon: <BookMarked size={20}/> },
+  { title: 'Daily and weekly Iman-building routines added to every chapter',    date: 'Aug 2026', icon: <Sunrise size={20}/> },
+  { title: 'More chapters and tafseer sources being added regularly',        date: 'Ongoing', icon: <Sparkles size={20}/> },
 ];
 
 const FAQS = [
@@ -331,48 +334,52 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
         </div>
       </section>
 
-      {/* ── Featured Courses ── */}
+      {/* ── Ayah of the Day ── */}
+      <section className="py-20 relative overflow-hidden" style={{ background: 'linear-gradient(135deg,#00182F 0%,#003466 55%,#0052AD 100%)' }}>
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(1.5px 1.5px at 15% 25%, white, transparent), radial-gradient(1.5px 1.5px at 80% 20%, white, transparent), radial-gradient(1px 1px at 30% 75%, white, transparent), radial-gradient(1px 1px at 70% 70%, white, transparent)', backgroundSize: '220px 220px' }} />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-8"
+               style={{ background: 'rgba(0,122,255,0.15)', border: '1px solid rgba(0,122,255,0.35)', color: '#93C5FD' }}>
+            <Moon size={13} /> Ayah of the Day — Surah An-Nisa, 4:136
+          </div>
+          <p dir="rtl" lang="ar" className="text-2xl sm:text-3xl leading-loose text-white font-semibold mb-8" style={{ fontFamily: '"Traditional Arabic", "Scheherazade New", serif' }}>
+            يَا أَيُّهَا الَّذِينَ آمَنُوا آمِنُوا بِاللَّهِ وَرَسُولِهِ وَالْكِتَابِ الَّذِي نَزَّلَ عَلَى رَسُولِهِ وَالْكِتَابِ الَّذِي أَنزَلَ مِن قَبْلُ ۚ وَمَن يَكْفُرْ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ وَالْيَوْمِ الْآخِرِ فَقَدْ ضَلَّ ضَلَالًا بَعِيدًا
+          </p>
+          <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed mb-2">
+            "O you who believe! Believe in Allah, His Messenger, the Book He revealed to His Messenger, and the Books
+            He revealed before. Whoever disbelieves in Allah, His angels, His Books, His Messengers, and the Last Day
+            has strayed far into error."
+          </p>
+          <p className="text-white/50 text-sm mb-8">Surah An-Nisa (4:136)</p>
+          <button onClick={onGetStarted}
+            className="px-6 py-3 rounded-2xl text-sm font-bold text-white inline-flex items-center gap-2 transition-all hover:scale-105 active:scale-95"
+            style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)', boxShadow: '0 8px 32px rgba(0,82,173,0.5)' }}>
+            Study This Ayah — Chapter 1 <ArrowRight size={16}/>
+          </button>
+        </div>
+      </section>
+
+      {/* ── Featured Scholars ── */}
       <section id="courses" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <Eyebrow>Featured Courses</Eyebrow>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Learn from Iman Ki Shama's Best</h2>
-            <p className="text-slate-500 mt-3 max-w-xl mx-auto">A sample of courses our students are learning right now.</p>
+            <Eyebrow>Sources & References</Eyebrow>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4 tracking-tight">Grounded in Authentic Scholarship</h2>
+            <p className="text-slate-500 mt-3 max-w-xl mx-auto">Every lesson is built on the recognized tafseer and translation work of these scholars.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {FEATURED_COURSES.map((c, i) => (
+            {FEATURED_SCHOLARS.map((s, i) => (
               <div key={i} className="card card-hover overflow-hidden group cursor-pointer" onClick={onGetStarted}>
-                <div className="h-32 relative overflow-hidden flex items-center justify-center"
+                <div className="h-24 relative overflow-hidden flex items-center justify-center"
                      style={{ background: 'linear-gradient(135deg,#0052AD,#007AFF)' }}>
                   <div className="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-500">
-                    {c.icon}
+                    {s.icon}
                   </div>
-                  <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full text-xs font-bold text-white" style={{ background: 'rgba(255,255,255,0.18)', backdropFilter: 'blur(10px)' }}>
-                    {c.subject}
-                  </span>
                 </div>
                 <div className="p-5">
-                  <h3 className="font-bold text-slate-800 mb-1 line-clamp-2 group-hover:text-brand-700 transition-colors">{c.title}</h3>
-                  <p className="text-xs text-slate-500 mb-3">{c.teacher}</p>
-                  <div className="flex items-center justify-between text-xs text-slate-400 mb-3">
-                    <div className="flex items-center gap-1">
-                      <Star size={12} className="fill-amber-400 text-amber-400" />
-                      <span className="font-semibold text-slate-700">{c.rating}</span>
-                    </div>
-                    <span>{c.lessons} lessons</span>
-                    <span>{c.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="flex-1 h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full bg-gradient-to-r from-primary-500 to-primary-400" style={{ width: `${c.progress}%` }} />
-                    </div>
-                    <span className="text-[11px] font-semibold text-slate-500">{c.progress}%</span>
-                  </div>
-                  <button onClick={(e) => { e.stopPropagation(); onGetStarted(); }}
-                    className="w-full py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-95"
-                    style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)' }}>
-                    Enroll Now
-                  </button>
+                  <h3 className="font-bold text-slate-800 mb-1 group-hover:text-brand-700 transition-colors">{s.name}</h3>
+                  <p className="text-sm text-primary-600 font-semibold mb-1">{s.work}</p>
+                  <p className="text-xs text-slate-500">{s.note}</p>
                 </div>
               </div>
             ))}
