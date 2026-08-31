@@ -1,0 +1,131 @@
+import { useEffect, useState, Suspense, lazy } from 'react';
+import { AuthProvider, useAuth } from './lib/auth';
+import { supabase } from './lib/supabase';
+import { evaluateUserKPIs } from './lib/kpiEngine';
+import { evaluateTimeBasedAlerts } from './lib/notificationEngine';
+import AuthPage from './pages/AuthPage';
+import LandingPage from './pages/LandingPage';
+import MfaChallengePage from './pages/MfaChallengePage';
+import Shell from './components/Shell';
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const CoursesPage = lazy(() => import('./pages/CoursesPage'));
+const LecturesPage = lazy(() => import('./pages/LecturesPage'));
+const AssignmentsPage = lazy(() => import('./pages/AssignmentsPage'));
+const HrHubPage = lazy(() => import('./pages/HrHubPage'));
+const CoursesHubPage = lazy(() => import('./pages/CoursesHubPage'));
+const ExamsHubPage = lazy(() => import('./pages/ExamsHubPage'));
+const QuestionsHubPage = lazy(() => import('./pages/QuestionsHubPage'));
+const LearningHubPage = lazy(() => import('./pages/LearningHubPage'));
+const PerformanceHubPage = lazy(() => import('./pages/PerformanceHubPage'));
+const FinanceHubPage = lazy(() => import('./pages/FinanceHubPage'));
+const UsersPage = lazy(() => import('./pages/UsersPage'));
+const QuestionBankPage = lazy(() => import('./pages/QuestionBankPage'));
+const ExamsPage = lazy(() => import('./pages/ExamsPage'));
+const AnalyticsPage = lazy(() => import('./pages/AnalyticsPage'));
+const KpiPage = lazy(() => import('./pages/KpiPage'));
+const ReportsPage = lazy(() => import('./pages/ReportsPage'));
+const AlertsPage = lazy(() => import('./pages/AlertsPage'));
+const AuditPage = lazy(() => import('./pages/AuditPage'));
+const SettingsPage = lazy(() => import('./pages/SettingsPage'));
+const LivePage = lazy(() => import('./pages/LivePage'));
+const FinancePage = lazy(() => import('./pages/FinancePage'));
+const ProfilePage = lazy(() => import('./pages/ProfilePage'));
+const CertificatePage = lazy(() => import('./pages/CertificatePage'));
+const AttendancePage = lazy(() => import('./pages/AttendancePage'));
+const BookmarksPage = lazy(() => import('./pages/BookmarksPage'));
+const LibraryPage = lazy(() => import('./pages/LibraryPage'));
+import { Spinner } from './components/ui';
+
+function AppInner() {
+  const { session, profile, loading, mfaRequired } = useAuth();
+  const [active, setActive] = useState('dashboard');
+  const [unreadAlerts, setUnreadAlerts] = useState(0);
+  const [preAuthView, setPreAuthView] = useState<'home' | 'auth'>('home');
+
+  useEffect(() => {
+    if (!profile) return;
+    (async () => {
+      // Background continuous KPI evaluation
+      await evaluateUserKPIs(profile.id, profile.role);
+      
+      // Evaluate time-based alerts (Due dates, Behind Schedule, etc.)
+      await evaluateTimeBasedAlerts(profile.id, profile.role);
+      
+      // Fetch unread alerts
+      const { count } = await supabase.from('alerts').select('id', { count: 'exact', head: true }).eq('user_id', profile.id).is('read_at', null);
+      setUnreadAlerts(count || 0);
+    })();
+  }, [profile?.id, active]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-mesh flex flex-col items-center justify-center gap-6">
+        <div className="bg-white rounded-2xl px-4 py-3 shadow-lg">
+          <img src="/assets/ziconlogo.jpeg" alt="ZiLearn" className="h-9 w-auto object-contain" />
+        </div>
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (!session || !profile) {
+    if (preAuthView === 'home') {
+      return <LandingPage onGetStarted={() => setPreAuthView('auth')} />;
+    }
+    return <AuthPage onBack={() => setPreAuthView('home')} />;
+  }
+
+  if (mfaRequired) {
+    return <MfaChallengePage />;
+  }
+
+  const role = profile.role;
+  const render = () => {
+    switch (active) {
+      case 'dashboard': return <DashboardPage onNavigate={setActive} />;
+      case 'courses': return <CoursesPage />;
+      case 'lectures': return role === 'student' || role === 'professor' ? <LecturesPage onNavigate={setActive} /> : <DashboardPage />;
+      case 'assignments': return role === 'student' || role === 'professor' ? <AssignmentsPage onNavigate={setActive} /> : <DashboardPage />;
+      case 'hrhub': return role === 'admin' ? <HrHubPage /> : <DashboardPage />;
+      case 'courseshub': return role === 'admin' ? <CoursesHubPage /> : <DashboardPage />;
+      case 'examshub': return role === 'admin' ? <ExamsHubPage /> : <DashboardPage />;
+      case 'questionshub': return role === 'admin' ? <QuestionsHubPage /> : <DashboardPage />;
+      case 'learninghub': return role === 'admin' ? <LearningHubPage /> : <DashboardPage />;
+      case 'performancehub': return role === 'admin' ? <PerformanceHubPage /> : <DashboardPage />;
+      case 'financehub': return role === 'admin' ? <FinanceHubPage /> : <DashboardPage />;
+      case 'users': return role === 'admin' ? <UsersPage /> : <DashboardPage />;
+      case 'questionbank': return role === 'admin' || role === 'professor' ? <QuestionBankPage /> : <DashboardPage />;
+      case 'exams': return <ExamsPage />;
+      case 'analytics': return <AnalyticsPage />;
+      case 'kpis': return role === 'admin' || role === 'professor' ? <KpiPage /> : <DashboardPage />;
+      case 'reports': return <ReportsPage />;
+      case 'alerts': return <AlertsPage />;
+      case 'audit': return role === 'admin' ? <AuditPage /> : <DashboardPage />;
+      case 'live': return <LivePage />;
+      case 'finance': return role === 'student' ? <FinancePage /> : <DashboardPage />;
+      case 'profile': return <ProfilePage />;
+      case 'certificates': return role === 'student' ? <CertificatePage /> : <DashboardPage />;
+      case 'attendance': return role === 'student' || role === 'professor' ? <AttendancePage /> : <DashboardPage />;
+      case 'bookmarks': return role === 'student' ? <BookmarksPage /> : <DashboardPage />;
+      case 'library': return role === 'student' ? <LibraryPage /> : <DashboardPage />;
+      case 'settings': return role === 'admin' ? <SettingsPage /> : <DashboardPage />;
+      default: return <DashboardPage />;
+    }
+  };
+
+  return (
+    <Shell active={active} onNavigate={setActive} alertsCount={unreadAlerts}>
+      <Suspense fallback={<div className="flex h-full items-center justify-center"><Spinner /></div>}>
+        {render()}
+      </Suspense>
+    </Shell>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppInner />
+    </AuthProvider>
+  );
+}
