@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, ReactNode } from 'react';
+import { motion } from 'framer-motion';
 import {
   GraduationCap, BookOpen, Users, Award, BarChart3, Star, CheckCircle2, ArrowRight, Play,
   Sparkles, Radio, Menu, X, ChevronDown, Calculator, Languages as LanguagesIcon,
@@ -183,7 +184,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             <button onClick={onGetStarted} className="text-sm font-semibold text-slate-700 hover:text-brand-700 transition-colors">Login</button>
             <button onClick={onGetStarted}
               className="px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-95"
-              style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', boxShadow: '0 4px 14px rgba(217,119,6,0.35)' }}>
+              style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)', boxShadow: '0 4px 14px rgba(0,82,173,0.35)' }}>
               Get Started
             </button>
           </div>
@@ -211,7 +212,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                 </button>
                 <button onClick={onGetStarted}
                   className="px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all hover:opacity-90 active:scale-95"
-                  style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', boxShadow: '0 4px 14px rgba(217,119,6,0.35)' }}>
+                  style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)', boxShadow: '0 4px 14px rgba(0,82,173,0.35)' }}>
                   Get Started
                 </button>
               </div>
@@ -222,36 +223,40 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
 
       {/* ── Hero ── */}
       <section className="relative pt-32 pb-24 overflow-hidden"
-               style={{ background: 'linear-gradient(135deg,#1c1210 0%,#3d1712 55%,#66261c 100%)' }}>
-        <div className="absolute top-16 left-1/5 w-72 h-72 rounded-full opacity-20 animate-float" style={{ background: 'radial-gradient(circle,#f59e0b,transparent 70%)' }} />
-        <div className="absolute bottom-10 right-1/5 w-64 h-64 rounded-full opacity-15" style={{ background: 'radial-gradient(circle,#fbbf24,transparent 70%)', animation: 'float 8s ease-in-out infinite reverse' }} />
-        <div className="absolute top-1/3 right-10 w-40 h-40 rounded-full opacity-10" style={{ background: 'radial-gradient(circle,#e0928a,transparent 70%)', animation: 'float 10s ease-in-out infinite' }} />
+               style={{ background: 'linear-gradient(135deg,#00182F 0%,#003466 55%,#0052AD 100%)' }}>
+        <div className="absolute top-16 left-1/5 w-72 h-72 rounded-full opacity-20 animate-float" style={{ background: 'radial-gradient(circle,#007AFF,transparent 70%)' }} />
+        <div className="absolute bottom-10 right-1/5 w-64 h-64 rounded-full opacity-15" style={{ background: 'radial-gradient(circle,#4A97FF,transparent 70%)', animation: 'float 8s ease-in-out infinite reverse' }} />
+        <div className="absolute top-1/3 right-10 w-40 h-40 rounded-full opacity-10" style={{ background: 'radial-gradient(circle,#93C5FD,transparent 70%)', animation: 'float 10s ease-in-out infinite' }} />
 
         {/* Floating education icon chips */}
         <div className="hidden lg:block absolute top-40 left-12 p-3 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-sm animate-float" style={{ animationDelay: '0.4s' }}>
-          <BookOpen size={20} className="text-amber-300" />
+          <BookOpen size={20} className="text-primary-300" />
         </div>
         <div className="hidden lg:block absolute bottom-32 left-24 p-3 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-sm animate-float" style={{ animationDelay: '1.6s' }}>
-          <GraduationCap size={20} className="text-amber-300" />
+          <GraduationCap size={20} className="text-primary-300" />
         </div>
         <div className="hidden lg:block absolute top-52 right-16 p-3 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-sm animate-float" style={{ animationDelay: '2.4s' }}>
-          <Sparkles size={20} className="text-amber-300" />
+          <Sparkles size={20} className="text-primary-300" />
         </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="flex justify-center mb-6">
             <div className="bg-white rounded-2xl px-3 py-2 shadow-lg">
               <img src="/assets/imaan-ki-shama-logo.png" alt="Iman Ki Shama" className="h-10 sm:h-12 w-auto object-contain" />
             </div>
           </div>
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-semibold mb-6"
-               style={{ background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.35)', color: '#fbbf24' }}>
+               style={{ background: 'rgba(0,122,255,0.15)', border: '1px solid rgba(0,122,255,0.35)', color: '#4A97FF' }}>
             <Sparkles size={13} />
             AI-Powered Learning Management System
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white mb-6 leading-tight tracking-tight">
             Learning made<br />
-            <span style={{ background: 'linear-gradient(90deg,#fbbf24,#f59e0b)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            <span style={{ background: 'linear-gradient(90deg,#4A97FF,#007AFF)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               brilliantly simple.
             </span>
           </h1>
@@ -261,7 +266,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           <div className="flex flex-wrap gap-4 justify-center">
             <button onClick={onGetStarted}
               className="px-7 py-3.5 rounded-2xl text-sm font-bold text-white flex items-center justify-center gap-2 transition-all hover:scale-105 active:scale-95"
-              style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', boxShadow: '0 8px 32px rgba(217,119,6,0.5)' }}>
+              style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)', boxShadow: '0 8px 32px rgba(0,82,173,0.5)' }}>
               Get Started <ArrowRight size={16}/>
             </button>
             <a href="#courses"
@@ -308,7 +313,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
               </div>
             </div>
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* ── Trusted By ── */}
@@ -338,7 +343,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             {FEATURED_COURSES.map((c, i) => (
               <div key={i} className="card card-hover overflow-hidden group cursor-pointer" onClick={onGetStarted}>
                 <div className="h-32 relative overflow-hidden flex items-center justify-center"
-                     style={{ background: 'linear-gradient(135deg,#7c2e22,#9c3d2f)' }}>
+                     style={{ background: 'linear-gradient(135deg,#0052AD,#007AFF)' }}>
                   <div className="w-14 h-14 rounded-2xl bg-white/15 border border-white/20 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-500">
                     {c.icon}
                   </div>
@@ -365,7 +370,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                   </div>
                   <button onClick={(e) => { e.stopPropagation(); onGetStarted(); }}
                     className="w-full py-2.5 rounded-xl text-sm font-bold text-white transition-all hover:opacity-90 active:scale-95"
-                    style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)' }}>
+                    style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)' }}>
                     Enroll Now
                   </button>
                 </div>
@@ -429,7 +434,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             {PROCESS_STEPS.map((s, i) => (
               <div key={s.label} className="flex lg:flex-col items-center lg:text-center gap-4 lg:gap-3 flex-1 relative">
                 <div className="w-14 h-14 shrink-0 rounded-2xl flex items-center justify-center text-white font-bold shadow-md"
-                     style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)' }}>
+                     style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)' }}>
                   {s.icon}
                 </div>
                 <div className="lg:flex-1">
@@ -490,7 +495,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                 <Radio size={18} className="text-rose-500" />
                 <p className="font-bold text-slate-800 text-sm">Live Classroom</p>
               </div>
-              <div className="rounded-xl h-28 flex items-center justify-center mb-3" style={{ background: 'linear-gradient(135deg,#1c1210,#3d1712)' }}>
+              <div className="rounded-xl h-28 flex items-center justify-center mb-3" style={{ background: 'linear-gradient(135deg,#00182F,#00284F)' }}>
                 <PlayCircle size={32} className="text-white/70" />
               </div>
               <div className="flex items-center gap-1.5 text-xs font-bold text-rose-500">
@@ -502,7 +507,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
       </section>
 
       {/* ── Testimonials ── */}
-      <section className="py-24" style={{ background: 'linear-gradient(135deg,#1c1210 0%,#3d1712 100%)' }}>
+      <section className="py-24" style={{ background: 'linear-gradient(135deg,#00182F 0%,#00284F 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-black text-white">Loved by Students, Teachers & Parents</h2>
@@ -516,7 +521,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                 </div>
                 <p className="text-white/80 text-sm leading-relaxed mb-5">"{t.text}"</p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)' }}>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold" style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)' }}>
                     {t.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
                   </div>
                   <div>
@@ -558,7 +563,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           <div className="flex gap-5 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide snap-x snap-mandatory">
             {LATEST_COURSES.map((c, i) => (
               <div key={i} onClick={onGetStarted} className="card card-hover shrink-0 w-64 p-5 snap-start cursor-pointer">
-                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white mb-4" style={{ background: 'linear-gradient(135deg,#7c2e22,#9c3d2f)' }}>
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center text-white mb-4" style={{ background: 'linear-gradient(135deg,#0052AD,#007AFF)' }}>
                   {c.icon}
                 </div>
                 <p className="text-xs font-bold text-primary-700 uppercase tracking-wide mb-1">{c.subject}</p>
@@ -616,7 +621,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
       </section>
 
       {/* ── Newsletter ── */}
-      <section className="py-20" style={{ background: 'linear-gradient(135deg,#f59e0b 0%,#d97706 100%)' }}>
+      <section className="py-20" style={{ background: 'linear-gradient(135deg,#007AFF 0%,#0052AD 100%)' }}>
         <div className="max-w-3xl mx-auto px-4 text-center">
           <Mail size={28} className="text-white mx-auto mb-4" />
           <h2 className="text-2xl sm:text-3xl font-black text-white mb-3 tracking-tight">Stay in the Loop</h2>
@@ -647,14 +652,14 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           <p className="text-lg text-slate-500 mb-8">Join thousands of students and teachers already growing with Iman Ki Shama.</p>
           <button onClick={onGetStarted}
             className="px-10 py-4 rounded-2xl text-white font-bold text-lg hover:scale-105 active:scale-95 transition-all"
-            style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', boxShadow: '0 8px 32px rgba(217,119,6,0.4)' }}>
+            style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)', boxShadow: '0 8px 32px rgba(0,82,173,0.4)' }}>
             Get Started for Free <ArrowRight size={20} className="inline ml-1" />
           </button>
         </div>
       </section>
 
       {/* ── Footer ── */}
-      <footer className="py-16" style={{ background: 'linear-gradient(180deg,#1c1210 0%,#0f0a09 100%)' }}>
+      <footer className="py-16" style={{ background: 'linear-gradient(180deg,#00182F 0%,#0f0a09 100%)' }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
             <div className="col-span-2">

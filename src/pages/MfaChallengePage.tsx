@@ -39,7 +39,7 @@ export default function MfaChallengePage() {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
       <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
         <div className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4"
-             style={{ background: 'linear-gradient(135deg,#4f46e5,#7c3aed)' }}>
+             style={{ background: 'linear-gradient(135deg,#0052AD,#7c3aed)' }}>
           <ShieldCheck size={22} className="text-white" />
         </div>
         <h1 className="text-xl font-black text-slate-900">Two-factor verification</h1>
@@ -65,7 +65,7 @@ export default function MfaChallengePage() {
 
           <button type="submit" disabled={busy || code.length !== 6}
             className="w-full py-3 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90 active:scale-95 disabled:opacity-60"
-            style={{ background: 'linear-gradient(135deg,#4f46e5,#7c3aed)' }}>
+            style={{ background: 'linear-gradient(135deg,#0052AD,#7c3aed)' }}>
             {busy ? 'Verifying…' : 'Verify'}
           </button>
         </form>

@@ -4,6 +4,7 @@
 import { Eye, EyeOff, Mail, Lock, User, AlertCircle, ShieldCheck, Users as UsersIcon, BookOpen, GraduationCap, Sparkles, Award, PlayCircle, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 type Mode = 'login' | 'register' | 'forgot';
 
@@ -69,7 +70,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
 
   return (
     <div className="min-h-screen flex items-center justify-center px-4 py-8 sm:px-6 sm:py-12 relative overflow-hidden"
-         style={{ background: 'linear-gradient(155deg,#3d1712 0%,#c05f52 30%,#f59e0b 65%,#fbbf24 100%)' }}>
+         style={{ background: 'linear-gradient(155deg,#00284F 0%,#4A97FF 30%,#007AFF 65%,#4A97FF 100%)' }}>
 
       {/* Ambient glow + dot texture (no screenshot used, pure CSS) */}
       <div className="absolute inset-0 opacity-70" style={{
@@ -79,8 +80,8 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
         backgroundImage: 'radial-gradient(1.5px 1.5px at 10% 20%, white, transparent), radial-gradient(1.5px 1.5px at 85% 15%, white, transparent), radial-gradient(1px 1px at 25% 80%, white, transparent), radial-gradient(1px 1px at 70% 75%, white, transparent), radial-gradient(1.5px 1.5px at 92% 60%, white, transparent), radial-gradient(1px 1px at 5% 55%, white, transparent), radial-gradient(1.5px 1.5px at 55% 90%, white, transparent)',
         backgroundSize: '260px 260px',
       }} />
-      <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full opacity-40 animate-float" style={{ background: 'radial-gradient(circle,#7c2e22,transparent 70%)' }} />
-      <div className="absolute -bottom-24 -right-10 w-[28rem] h-[28rem] rounded-full opacity-30" style={{ background: 'radial-gradient(circle,#fbbf24,transparent 70%)', animation: 'float 9s ease-in-out infinite reverse' }} />
+      <div className="absolute -top-20 -left-20 w-96 h-96 rounded-full opacity-40 animate-float" style={{ background: 'radial-gradient(circle,#0052AD,transparent 70%)' }} />
+      <div className="absolute -bottom-24 -right-10 w-[28rem] h-[28rem] rounded-full opacity-30" style={{ background: 'radial-gradient(circle,#4A97FF,transparent 70%)', animation: 'float 9s ease-in-out infinite reverse' }} />
       <div className="absolute top-1/3 right-1/4 w-56 h-56 rounded-full opacity-20" style={{ background: 'radial-gradient(circle,#a7a9ac,transparent 70%)', animation: 'float 11s ease-in-out infinite' }} />
 
       <div className="relative z-10 w-full max-w-6xl flex items-center justify-center gap-12 xl:gap-20">
@@ -93,7 +94,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
           </div>
           <h1 className="text-4xl font-black leading-tight tracking-tight mb-4">
             Learning made<br />
-            <span style={{ background: 'linear-gradient(90deg,#fff7e0,#fde68a)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            <span style={{ background: 'linear-gradient(90deg,#EFF6FF,#93C5FD)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               brilliantly simple.
             </span>
           </h1>
@@ -127,7 +128,11 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
         </div>
 
       {/* Card */}
-      <div className="relative z-10 w-full max-w-md rounded-[2rem] p-[2px]" style={{ background: 'linear-gradient(135deg,#7c2e22,#f59e0b,#a7a9ac)', boxShadow: '0 24px 70px rgba(124,46,34,0.45)' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 16, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 w-full max-w-md rounded-[2rem] p-[2px]" style={{ background: 'linear-gradient(135deg,#0052AD,#007AFF,#a7a9ac)', boxShadow: '0 24px 70px rgba(0,52,102,0.45)' }}>
       <div className="bg-[#fbf8f4] rounded-[calc(2rem-2px)] px-6 py-8 sm:px-10 sm:py-10">
 
         {onBack && (
@@ -162,9 +167,9 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
           </h2>
           <p className="text-slate-500 text-sm mt-2 leading-relaxed">
             {mode === 'login' ? (
-              <>Sign in to continue your learning journey with{' '}<span className="text-amber-600 font-semibold">Iman Ki Shama</span>.</>
+              <>Sign in to continue your learning journey with{' '}<span className="text-primary-600 font-semibold">Iman Ki Shama</span>.</>
             ) : mode === 'register' ? (
-              <>Join <span className="text-amber-600 font-semibold">Iman Ki Shama</span> and start learning today.</>
+              <>Join <span className="text-primary-600 font-semibold">Iman Ki Shama</span> and start learning today.</>
             ) : (
               "Enter your email and we'll send a reset link"
             )}
@@ -210,7 +215,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
               <div className="relative">
                 <User size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-500" />
                 <input
-                  className="w-full border-2 border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400 transition-colors"
+                  className="w-full border-2 border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400/40 focus:border-primary-400 transition-colors"
                   placeholder="John Doe" value={name} onChange={e => setName(e.target.value)} required
                 />
               </div>
@@ -221,7 +226,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
             <div className="relative">
               <Mail size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-500" />
               <input
-                className="w-full border-2 border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400 transition-colors"
+                className="w-full border-2 border-slate-200 rounded-xl pl-10 pr-4 py-3 text-sm bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400/40 focus:border-primary-400 transition-colors"
                 type="email" placeholder="Enter your email" value={email} onChange={e => setEmail(e.target.value)} required
               />
             </div>
@@ -234,7 +239,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
               <div className="relative">
                 <Lock size={17} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-500" />
                 <input
-                  className="w-full border-2 border-slate-200 rounded-xl pl-10 pr-11 py-3 text-sm bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-400/40 focus:border-amber-400 transition-colors"
+                  className="w-full border-2 border-slate-200 rounded-xl pl-10 pr-11 py-3 text-sm bg-white text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary-400/40 focus:border-primary-400 transition-colors"
                   type={showPw ? 'text' : 'password'} placeholder="Enter your password" value={password} onChange={e => setPassword(e.target.value)} required minLength={6}
                 />
                 <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-brand-400 hover:text-brand-600 transition-colors">
@@ -248,7 +253,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2.5 cursor-pointer select-none">
                 <input type="checkbox" checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-amber-600 focus:ring-amber-400/50" />
+                  className="w-4 h-4 rounded border-slate-300 text-primary-600 focus:ring-primary-400/50" />
                 <span className="text-sm text-slate-600 font-medium">Keep me signed in</span>
               </label>
               <button type="button" onClick={() => setMode('forgot')} className="text-sm text-brand-600 hover:text-brand-700 font-semibold transition-colors">
@@ -271,7 +276,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
 
           <button type="submit" disabled={loading}
             className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-sm text-white transition-all hover:opacity-90 active:scale-95 disabled:opacity-60 mt-2"
-            style={{ background: 'linear-gradient(135deg,#f59e0b,#d97706)', boxShadow: '0 4px 18px rgba(217,119,6,0.45)' }}>
+            style={{ background: 'linear-gradient(135deg,#007AFF,#0052AD)', boxShadow: '0 4px 18px rgba(0,82,173,0.45)' }}>
             {loading ? (
               <div className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
             ) : (
@@ -299,7 +304,7 @@ const handleDemoLogin = async (demoEmail: string, demoPassword: string) => {
           © 2026 IMAN KI SHAMA
         </p>
       </div>
-      </div>
+      </motion.div>
       </div>
     </div>
   );

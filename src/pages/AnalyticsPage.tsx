@@ -271,7 +271,7 @@ function AnalyticsView({ role, data }: { role: string; data: any }) {
           <div className="lg:col-span-2">
             <ChartCard title="Platform Growth (Users & Enrollments)">
               <div className="h-[300px] mt-4">
-                <BarChart data={data.growthByMonth || []} color="#4f46e5" />
+                <BarChart data={data.growthByMonth || []} color="#0052AD" />
               </div>
             </ChartCard>
           </div>
@@ -279,7 +279,7 @@ function AnalyticsView({ role, data }: { role: string; data: any }) {
             <ChartCard title="Courses by Category">
               <div className="h-[300px] mt-4 flex items-center justify-center">
                 <DonutChart segments={(data.catDist || []).map((d: any, i: number) => ({
-                  label: d.label, value: d.value, color: ['#4f46e5', '#10b981', '#f59e0b', '#ec4899', '#8b5cf6'][i % 5]
+                  label: d.label, value: d.value, color: ['#0052AD', '#10b981', '#007AFF', '#ec4899', '#8b5cf6'][i % 5]
                 }))} />
               </div>
             </ChartCard>
@@ -303,7 +303,7 @@ function AnalyticsView({ role, data }: { role: string; data: any }) {
           <ChartCard title="Content Utilization (by Type)">
             <div className="h-[300px] mt-4 flex items-center justify-center">
               <DonutChart segments={(data.matByType || []).map((d: any, i: number) => ({
-                label: d.label.toUpperCase(), value: d.value, color: ['#8b5cf6', '#ec4899', '#10b981', '#f59e0b', '#3b82f6'][i % 5]
+                label: d.label.toUpperCase(), value: d.value, color: ['#8b5cf6', '#ec4899', '#10b981', '#007AFF', '#3b82f6'][i % 5]
               }))} />
             </div>
           </ChartCard>
@@ -333,7 +333,7 @@ function AnalyticsView({ role, data }: { role: string; data: any }) {
         <div className="lg:col-span-2">
           <ChartCard title="Progress Trends (Learning Hours)">
             <div className="h-[300px] mt-4">
-              <LineChart data={data.progressTrends || []} color="#4f46e5" />
+              <LineChart data={data.progressTrends || []} color="#0052AD" />
             </div>
           </ChartCard>
         </div>

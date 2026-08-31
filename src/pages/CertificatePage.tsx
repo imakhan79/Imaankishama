@@ -36,12 +36,12 @@ function downloadCertificate(cert: CertRecord, studentName: string) {
   win.document.write(`<!doctype html><html><head><title>${cert.certId}</title><style>
     @page { size: landscape; margin: 0; }
     body { margin: 0; font-family: Georgia, 'Times New Roman', serif; background: #fdf6e3; display: flex; align-items: center; justify-content: center; height: 100vh; }
-    .cert { width: 90%; max-width: 900px; border: 10px solid #f59e0b; border-radius: 16px; padding: 50px 50px 60px; text-align: center; background: linear-gradient(135deg,#fffbeb,#fef3c7); }
+    .cert { width: 90%; max-width: 900px; border: 10px solid #007AFF; border-radius: 16px; padding: 50px 50px 60px; text-align: center; background: linear-gradient(135deg,#fffbeb,#fef3c7); }
     .cert-logo { height: 46px; margin-bottom: 18px; }
-    .kicker { letter-spacing: 6px; text-transform: uppercase; font-size: 12px; font-weight: bold; color: #7c2e22; }
+    .kicker { letter-spacing: 6px; text-transform: uppercase; font-size: 12px; font-weight: bold; color: #0052AD; }
     .sub { color: #64748b; margin: 18px 0 4px; font-size: 14px; }
     .name { font-size: 34px; font-weight: bold; color: #1e293b; margin: 6px 0 16px; }
-    .course { font-size: 22px; font-weight: bold; color: #7c2e22; margin: 10px 0 24px; }
+    .course { font-size: 22px; font-weight: bold; color: #0052AD; margin: 10px 0 24px; }
     .meta { display: flex; justify-content: center; gap: 40px; margin-top: 28px; }
     .meta div { text-align: center; }
     .meta p.label { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: #94a3b8; margin: 0 0 4px; }

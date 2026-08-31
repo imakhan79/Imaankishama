@@ -377,7 +377,7 @@ function AdminDashboard({ data }: { data: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-6">
         <ChartCard title="New User Growth (6 Months)">
           <div className="py-2">
-            <BarChart data={(data.growthByMonth || []).map((g: any) => ({ label: g.label, value: g.users }))} color="#f59e0b" />
+            <BarChart data={(data.growthByMonth || []).map((g: any) => ({ label: g.label, value: g.users }))} color="#007AFF" />
           </div>
         </ChartCard>
         <ChartCard title="New Enrollments (6 Months)">
@@ -393,7 +393,7 @@ function AdminDashboard({ data }: { data: any }) {
             <DonutChart
               segments={[
                 { label: 'Published', value: data.courseStatus?.approved || 0, color: '#10b981' },
-                { label: 'Pending', value: data.courseStatus?.pending || 0, color: '#f59e0b' },
+                { label: 'Pending', value: data.courseStatus?.pending || 0, color: '#007AFF' },
                 { label: 'Draft', value: data.courseStatus?.draft || 0, color: '#94a3b8' },
               ]}
             />
@@ -494,7 +494,7 @@ function StudentDashboard({ data, firstName, onNavigate }: { data: any; firstNam
       {/* Greeting hero */}
       <div className="hero-banner-dark rounded-3xl p-6 sm:p-7 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-56 h-56 rounded-full opacity-20 -translate-y-1/3 translate-x-1/4"
-             style={{ background: 'radial-gradient(circle,#f59e0b,transparent 70%)' }} />
+             style={{ background: 'radial-gradient(circle,#007AFF,transparent 70%)' }} />
         <div className="relative z-10">
           <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">Welcome back, {firstName}</h1>
           <p className="text-slate-300 mt-1.5">
@@ -506,7 +506,7 @@ function StudentDashboard({ data, firstName, onNavigate }: { data: any; firstNam
       {/* Progress rings */}
       <div className="grid grid-cols-2 gap-4 sm:gap-5">
         <div className="card p-6 flex items-center justify-center">
-          <ProgressRing value={data.avgProgress} color="#f59e0b" label="Overall Progress" />
+          <ProgressRing value={data.avgProgress} color="#007AFF" label="Overall Progress" />
         </div>
         <div className="card p-6 flex items-center justify-center">
           <ProgressRing value={data.avgScore} color="#059669" label="Average Score" />

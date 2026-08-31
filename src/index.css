@@ -8,10 +8,10 @@
    CSS DESIGN TOKENS
 ───────────────────────────────────────────────────────── */
 :root {
-  --color-primary:     #f59e0b;
-  --color-primary-light: #fbbf24;
-  --color-secondary:   #14b8a6;
-  --color-accent:      #f59e0b;
+  --color-primary:     #007AFF;
+  --color-primary-light: #4A97FF;
+  --color-secondary:   #1C6299;
+  --color-accent:      #007AFF;
   --color-success:     #10b981;
   --color-warning:     #f97316;
   --color-danger:      #ef4444;
@@ -88,7 +88,7 @@
 
   /* Selection */
   ::selection {
-    background: rgba(245,158,11,0.2);
+    background: rgba(0,122,255,0.2);
     color: inherit;
   }
 }
@@ -144,9 +144,9 @@
 
   .btn-primary {
     @apply btn-md bg-primary-600 text-white hover:bg-primary-700 active:scale-95;
-    box-shadow: 0 4px 14px rgba(217,119,6,0.35);
+    box-shadow: 0 4px 14px rgba(0,82,173,0.35);
   }
-  .btn-primary:hover { box-shadow: 0 6px 20px rgba(217,119,6,0.45); }
+  .btn-primary:hover { box-shadow: 0 6px 20px rgba(0,82,173,0.45); }
 
   .btn-secondary {
     @apply btn-md bg-secondary-500 text-white hover:bg-secondary-600 active:scale-95;
@@ -215,13 +215,13 @@
   }
 
   /* ── Gradients ── */
-  .gradient-primary  { background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); }
+  .gradient-primary  { background: linear-gradient(135deg, #007AFF 0%, #0052AD 100%); }
   .gradient-hero     { background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); }
   .gradient-aurora   { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
   .gradient-ocean    { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
   .gradient-emerald  { background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); }
   .gradient-sunset   { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-  .gradient-warm     { background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%); }
+  .gradient-warm     { background: linear-gradient(135deg, #007AFF 0%, #ef4444 100%); }
 
   /* ── Shimmer skeleton ── */
   .skeleton {
@@ -244,22 +244,22 @@
   }
   .sidebar-item-active {
     @apply bg-primary-600 text-white;
-    box-shadow: 0 4px 14px rgba(217,119,6,0.35);
+    box-shadow: 0 4px 14px rgba(0,82,173,0.35);
   }
 
   /* ── Hero banners (brand gradients, reused across dashboard/homepage heroes) ── */
   .hero-banner-dark {
-    background: linear-gradient(135deg,#1c1210 0%,#3d1712 60%,#531f18 100%);
+    background: linear-gradient(135deg,#00182F 0%,#00284F 60%,#531f18 100%);
   }
   .hero-banner-accent {
-    background: linear-gradient(135deg,#f59e0b,#d97706);
-    box-shadow: 0 20px 50px rgba(217,119,6,0.35);
+    background: linear-gradient(135deg,#007AFF,#0052AD);
+    box-shadow: 0 20px 50px rgba(0,82,173,0.35);
   }
 
   /* ── AI assistant promo card ── */
   .ai-assistant-card {
-    background: linear-gradient(135deg, rgba(124,46,34,0.06), rgba(245,158,11,0.10));
-    border: 1px solid rgba(124,46,34,0.10);
+    background: linear-gradient(135deg, rgba(0,52,102,0.06), rgba(0,122,255,0.10));
+    border: 1px solid rgba(0,52,102,0.10);
   }
 
   /* ── Timeline ── */
@@ -287,7 +287,7 @@
   }
   .progress-bar-fill {
     @apply h-full rounded-full;
-    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+    background: linear-gradient(90deg, #007AFF, #4A97FF);
     transition: width 0.8s cubic-bezier(0.16,1,0.3,1);
   }
 
@@ -348,7 +348,7 @@
 
   /* Text gradient */
   .text-gradient-primary {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    background: linear-gradient(135deg, #007AFF 0%, #0052AD 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -360,13 +360,13 @@
     background-clip: text;
   }
   .text-gradient-warm {
-    background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+    background: linear-gradient(135deg, #007AFF 0%, #ef4444 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .text-gradient-brand {
-    background: linear-gradient(135deg, #7c2e22 0%, #d97706 100%);
+    background: linear-gradient(135deg, #0052AD 0%, #0052AD 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -400,14 +400,14 @@
   .line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; }
 
   /* Ring glow */
-  .ring-glow { box-shadow: 0 0 0 4px rgba(245,158,11,0.15); }
+  .ring-glow { box-shadow: 0 0 0 4px rgba(0,122,255,0.15); }
 
   /* Mesh gradient background */
   .bg-mesh {
     background-color: #f4f6fb;
     background-image:
-      radial-gradient(at 20% 10%, rgba(245,158,11,0.08) 0px, transparent 50%),
+      radial-gradient(at 20% 10%, rgba(0,122,255,0.08) 0px, transparent 50%),
       radial-gradient(at 80% 20%, rgba(20,184,166,0.06) 0px, transparent 50%),
-      radial-gradient(at 50% 80%, rgba(124,46,34,0.05) 0px, transparent 50%);
+      radial-gradient(at 50% 80%, rgba(0,52,102,0.05) 0px, transparent 50%);
   }
 }

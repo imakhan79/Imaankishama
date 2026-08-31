@@ -135,8 +135,8 @@ function NavContent({
                           : 'text-slate-400 hover:bg-white/8 hover:text-white'
                       }`}
                       style={isActive ? {
-                        background: 'linear-gradient(135deg,#f59e0b,#d97706)',
-                        boxShadow: '0 4px 14px rgba(217,119,6,0.40)',
+                        background: 'linear-gradient(135deg,#007AFF,#0052AD)',
+                        boxShadow: '0 4px 14px rgba(0,82,173,0.40)',
                       } : undefined}
                     >
                       <span className={`transition-transform duration-200 group-hover:scale-110 ${isActive ? 'text-white' : ''}`}>
@@ -173,8 +173,8 @@ function NavContent({
                                   : 'text-slate-400 hover:bg-white/8 hover:text-white'
                               }`}
                               style={childIsActive ? {
-                                background: 'linear-gradient(135deg,#f59e0b,#d97706)',
-                                boxShadow: '0 4px 14px rgba(217,119,6,0.40)',
+                                background: 'linear-gradient(135deg,#007AFF,#0052AD)',
+                                boxShadow: '0 4px 14px rgba(0,82,173,0.40)',
                               } : undefined}
                             >
                               <span className={`transition-transform duration-200 group-hover:scale-110 ${childIsActive ? 'text-white' : ''}`}>
@@ -280,7 +280,7 @@ export default function Shell({
     <div className="min-h-screen bg-mesh flex">
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex w-64 flex-col fixed inset-y-0 z-40"
-             style={{ background: 'linear-gradient(180deg,#1c1210 0%,#3d1712 100%)', boxShadow: 'var(--shadow-sidebar)' }}>
+             style={{ background: 'linear-gradient(180deg,#00182F 0%,#00284F 100%)', boxShadow: 'var(--shadow-sidebar)' }}>
         <NavContent
           navGroups={navGroups}
           active={active}
@@ -302,7 +302,7 @@ export default function Shell({
         <div className="lg:hidden fixed inset-0 z-50 flex">
           <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setDrawerOpen(false)} />
           <aside className="relative w-72 flex flex-col animate-slide-right"
-                 style={{ background: 'linear-gradient(180deg,#1c1210 0%,#3d1712 100%)' }}>
+                 style={{ background: 'linear-gradient(180deg,#00182F 0%,#00284F 100%)' }}>
             <NavContent
               navGroups={navGroups}
               active={active}

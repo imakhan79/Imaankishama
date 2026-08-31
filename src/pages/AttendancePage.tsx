@@ -161,7 +161,7 @@ function ProfessorAttendance() {
           </div>
 
           <ChartCard title="Attendance Rate by Course">
-            <div className="py-2"><BarChart data={courseWise} color="#4f46e5" /></div>
+            <div className="py-2"><BarChart data={courseWise} color="#0052AD" /></div>
           </ChartCard>
 
           <ChartCard title="Student Roster">
@@ -338,7 +338,7 @@ function StudentAttendance() {
             </ChartCard>
             <ChartCard title="Course-wise Attendance">
               <div className="py-2">
-                {courseWise.length ? <BarChart data={courseWise} color="#4f46e5" /> : <p className="text-sm text-slate-400 text-center py-4">No data</p>}
+                {courseWise.length ? <BarChart data={courseWise} color="#0052AD" /> : <p className="text-sm text-slate-400 text-center py-4">No data</p>}
               </div>
             </ChartCard>
           </div>

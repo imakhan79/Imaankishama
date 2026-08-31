@@ -59,7 +59,7 @@ export function ChartCard({ title, children, action }: { title: string; children
   );
 }
 
-export function BarChart({ data, color = '#f59e0b' }: { data: { label: string; value: number }[]; color?: string }) {
+export function BarChart({ data, color = '#007AFF' }: { data: { label: string; value: number }[]; color?: string }) {
   const max = Math.max(...data.map((d) => d.value), 1);
   return (
     <div className="space-y-3.5">
@@ -81,7 +81,7 @@ export function BarChart({ data, color = '#f59e0b' }: { data: { label: string; v
 }
 
 export function LineChart({
-  data, color = '#f59e0b', height = 180,
+  data, color = '#007AFF', height = 180,
 }: {
   data: { label: string; value: number }[]; color?: string; height?: number;
 }) {
@@ -125,7 +125,7 @@ export function LineChart({
 }
 
 export function ProgressRing({
-  value, size = 120, stroke = 12, color = '#f59e0b', label,
+  value, size = 120, stroke = 12, color = '#007AFF', label,
 }: {
   value: number; size?: number; stroke?: number; color?: string; label?: string;
 }) {

@@ -100,7 +100,7 @@ export default function KpiPage() {
 
       {(role === 'professor' || role === 'student') && (
         <div className="rounded-3xl p-6 sm:p-7 relative overflow-hidden text-white"
-             style={{ background: 'linear-gradient(135deg,#312e81 0%,#4338ca 55%,#6366f1 120%)' }}>
+             style={{ background: 'linear-gradient(135deg,#312e81 0%,#4338ca 55%,#007AFF 120%)' }}>
           <div className="absolute top-0 right-0 w-56 h-56 rounded-full opacity-25 -translate-y-1/3 translate-x-1/4"
                style={{ background: 'radial-gradient(circle,#a5b4fc,transparent 70%)' }} />
           <div className="relative z-10">
@@ -167,7 +167,7 @@ export default function KpiPage() {
             const perf = Math.round((onTrack / total) * 1000) / 10;
             return (
               <div className="rounded-3xl p-6 sm:p-7 relative overflow-hidden text-white"
-                   style={{ background: 'linear-gradient(135deg,#0f0c29 0%,#302b63 55%,#4f46e5 120%)' }}>
+                   style={{ background: 'linear-gradient(135deg,#0f0c29 0%,#302b63 55%,#0052AD 120%)' }}>
                 <div className="absolute top-0 right-0 w-56 h-56 rounded-full opacity-25 -translate-y-1/3 translate-x-1/4"
                      style={{ background: 'radial-gradient(circle,#818cf8,transparent 70%)' }} />
                 <div className="relative z-10">
