@@ -4,7 +4,7 @@ import {
   Sparkles, Radio, Menu, X, ChevronDown, Calculator, Languages as LanguagesIcon,
   Cpu, Brain, Globe2, Briefcase, Code2, FlaskConical, ClipboardCheck, Gamepad2, Smartphone,
   UserCog, LineChart, PenLine, Trophy, School, FileCheck2, Bot, Mail, MapPin,
-  Facebook, Twitter, Linkedin, Instagram, PlayCircle,
+  Share2, AtSign, Link2, Camera, PlayCircle,
 } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────
@@ -665,7 +665,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
                 A modern, AI-powered learning management system by Zicon Technology.
               </p>
               <div className="flex gap-3">
-                {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
+                {[Share2, AtSign, Link2, Camera].map((Icon, i) => (
                   <a key={i} href="#" className="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center text-white/70 hover:text-white transition-colors">
                     <Icon size={15} />
                   </a>
