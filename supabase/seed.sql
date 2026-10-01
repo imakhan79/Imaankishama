@@ -84,6 +84,14 @@ CROSS JOIN LATERAL (SELECT (ARRAY['Abdullah','Maryam','Hamza','Khadija','Ali','S
 CROSS JOIN LATERAL (SELECT (ARRAY['Khan','Ahmed','Malik','Butt','Qureshi','Siddiqui','Chaudhry','Raza','Hussain','Sheikh',
                                   'Mirza','Abbasi','Rana','Hashmi','Ansari','Baig','Javed','Iqbal','Akhtar','Farooqi'])[1 + (n * 7) % 20] AS name) l;
 
+-- The app's one-click demo logins (AuthPage) — included so their dashboards are populated too.
+-- Looked up by email; skipped if they don't exist (e.g. on a fresh database).
+INSERT INTO seed_users
+SELECT d.n, a.id, a.email, d.full_name, d.role, 'active', d.phone, '150 days'::interval
+FROM (VALUES (98, 'professor@demo.com', 'Professor Smith', 'professor', '+92 321 2220098'),
+             (99, 'student@demo.com',   'Student Jones',   'student',   '+92 333 3330099')) d(n, email, full_name, role, phone)
+JOIN auth.users a ON a.email = d.email;
+
 INSERT INTO auth.users (
   instance_id, id, aud, role, email, encrypted_password, email_confirmed_at,
   raw_app_meta_data, raw_user_meta_data, created_at, updated_at,
@@ -138,6 +146,17 @@ INSERT INTO courses (id, title, description, category, professor_id, status, thu
   ('e1000000-0000-4000-8000-000000000018', 'Duas from the Quran', 'The supplications of the Prophets and the believers as recorded in the Quran.', 'Duas & Dhikr', 'e0000000-0000-4000-8000-000000000012', 'approved', '', now() - interval '12 days')
 ON CONFLICT (id) DO NOTHING;
 
+-- Courses taught by the demo professor (professor@demo.com), or Dr. Abdullah Rahman if it doesn't exist
+INSERT INTO courses (id, title, description, category, professor_id, status, thumbnail_url, created_at)
+SELECT c.id::uuid, c.title, c.descr, c.category,
+       coalesce((SELECT id FROM seed_users WHERE n = 98), 'e0000000-0000-4000-8000-000000000011'::uuid),
+       'published', '', now() - c.age
+FROM (VALUES
+  ('e1000000-0000-4000-8000-000000000019', 'Stories of the Prophets (Qasas al-Anbiya)', 'The stories of the Prophets as told in the Quran — from Adam (AS) to Isa (AS) — and their lessons for today.', 'Quran', '45 days'::interval),
+  ('e1000000-0000-4000-8000-000000000020', 'Introduction to Hadith Studies', 'What hadith are, how they were preserved, how scholars grade them, and the major collections.', 'Hadith', '40 days'::interval)
+) c(id, title, descr, category, age)
+ON CONFLICT (id) DO NOTHING;
+
 INSERT INTO lectures (id, course_id, title, description, duration_seconds, learning_objectives, publish_date, order_index, thumbnail_url) VALUES
   ('e2000000-0000-4000-8000-000000000011', 'e1000000-0000-4000-8000-000000000001', 'Introduction to Tajweed & Its Importance', 'What tajweed is, why it matters, and how to approach learning it.', 1500, 'Define tajweed and explain why correct recitation is required.', now() - interval '60 days', 1, ''),
   ('e2000000-0000-4000-8000-000000000012', 'e1000000-0000-4000-8000-000000000001', 'Makharij: Points of Articulation', 'The five main areas of articulation and the letters that emerge from each.', 2100, 'Identify the makhraj of each Arabic letter.', now() - interval '45 days', 2, ''),
@@ -185,7 +204,11 @@ INSERT INTO seed_lec VALUES
   (16,4,'Night Reflection & Muhasabah'),(16,5,'Setting Weekly Iman Goals'),
   (17,1,'Types of Hajj: Tamattu'', Qiran & Ifrad'),(17,2,'Ihram & Its Restrictions'),(17,3,'The Rites of Umrah'),
   (17,4,'The Days of Hajj: 8th to 13th Dhul Hijjah'),(17,5,'Etiquette of Visiting Madinah'),
-  (18,1,'The Rabbana Duas'),(18,2,'Duas of the Prophets'),(18,3,'Etiquette of Making Dua');
+  (18,1,'The Rabbana Duas'),(18,2,'Duas of the Prophets'),(18,3,'Etiquette of Making Dua'),
+  (19,1,'Adam (AS): The First Human'),(19,2,'Nuh (AS) and the Ark'),(19,3,'Ibrahim (AS): The Friend of Allah'),
+  (19,4,'Yusuf (AS): Patience and Forgiveness'),(19,5,'Musa (AS) and Pharaoh'),(19,6,'Isa (AS): Messenger to Bani Isra''il'),
+  (20,1,'What Is Hadith? The Sunnah and Its Role'),(20,2,'Isnad and Matn: Chain and Text'),(20,3,'Sahih, Hasan and Da''if'),
+  (20,4,'The Six Major Collections'),(20,5,'Studying the Forty Hadith of Imam an-Nawawi');
 
 INSERT INTO lectures (id, course_id, title, description, duration_seconds, learning_objectives, publish_date, order_index, thumbnail_url)
 SELECT ('e2000000-0000-4000-8000-000000000' || s.course || s.ord)::uuid, c.id, s.title,
@@ -286,7 +309,10 @@ INSERT INTO seed_enroll VALUES
   (3,21,'active'),(3,23,'active'),(3,24,'active'),(3,25,'active'),(3,26,'active'),(3,27,'active'),(3,30,'active'),(3,33,'withdrawn'),
   (4,22,'active'),(4,23,'active'),(4,25,'active'),(4,28,'active'),(4,29,'active'),(4,30,'active'),
   (5,21,'active'),(5,24,'active'),(5,26,'active'),(5,27,'active'),(5,30,'active'),
-  (9,21,'completed'),(9,32,'completed');
+  (9,21,'completed'),(9,32,'completed'),
+  -- demo student (student@demo.com); skipped if that account doesn't exist
+  (1,99,'active'),(2,99,'active'),(3,99,'active'),(4,99,'active'),(5,99,'active'),(9,99,'completed'),
+  (10,99,'active'),(13,99,'active'),(19,99,'active'),(20,99,'active');
 
 -- Bulk students (35–94): each joins ~28% of the published courses.
 INSERT INTO seed_enroll
@@ -295,18 +321,19 @@ SELECT c.n, u.n,
             WHEN u.status = 'graduated' OR x.h < 3 THEN 'completed'
             ELSE 'active' END
 FROM seed_users u
-CROSS JOIN (VALUES (1),(2),(3),(4),(5),(10),(11),(12),(13),(14),(15),(16),(17)) c(n)
+CROSS JOIN (VALUES (1),(2),(3),(4),(5),(10),(11),(12),(13),(14),(15),(16),(17),(19),(20)) c(n)
 CROSS JOIN LATERAL (SELECT abs(hashtext('enr' || u.n || '-' || c.n)) % 100 AS h) x
-WHERE u.n >= 35 AND x.h < 28;
+WHERE u.n BETWEEN 35 AND 94 AND x.h < 28;
 
 INSERT INTO enrollments (id, course_id, student_id, status, progress_pct, enrolled_at, completed_at)
 SELECT md5('seed-enr-' || s.course || '-' || s.student)::uuid,
        ('e1000000-0000-4000-8000-0000000000' || lpad(s.course::text, 2, '0'))::uuid,
-       ('e0000000-0000-4000-8000-0000000000' || s.student)::uuid,
+       su.id,
        s.status, 0,
        least(now() - interval '1 day', c.created_at + ((s.student % 30) || ' days')::interval),
        CASE WHEN s.status = 'completed' THEN least(now() - interval '1 day', c.created_at + ((s.student % 30 + 45) || ' days')::interval) END
 FROM seed_enroll s
+JOIN seed_users su ON su.n = s.student
 JOIN courses c ON c.id = ('e1000000-0000-4000-8000-0000000000' || lpad(s.course::text, 2, '0'))::uuid
 ON CONFLICT DO NOTHING;
 
@@ -592,7 +619,15 @@ INSERT INTO seed_q VALUES
   (54,17,'Days of Hajj','easy','true_false','The Day of Arafah is the 9th of Dhul Hijjah.','["True","False"]','true','The standing at Arafah takes place on 9 Dhul Hijjah.','approved'),
   (55,17,'Umrah','medium','short_answer','What is the name of the ritual walk between Safa and Marwah?','[]','"Sa''i"','Sa''i — seven circuits between Safa and Marwah.','approved'),
   (56,18,'Duas of the Prophets','easy','mcq','Which prophet made the dua "La ilaha illa Anta, subhanaka, inni kuntu minaz-zalimin"?','["Ibrahim","Yunus","Musa","Nuh"]','[1]','The dua of Yunus (AS) — Surah Al-Anbiya 21:87.','submitted'),
-  (57,18,'Rabbana Duas','easy','true_false','"Rabbana atina fid-dunya hasanah…" is from Surah Al-Baqarah.','["True","False"]','true','Surah Al-Baqarah 2:201.','draft');
+  (57,18,'Rabbana Duas','easy','true_false','"Rabbana atina fid-dunya hasanah…" is from Surah Al-Baqarah.','["True","False"]','true','Surah Al-Baqarah 2:201.','draft'),
+  (58,19,'Nuh (AS)','easy','mcq','Which prophet built the Ark by the command of Allah?','["Ibrahim","Nuh","Musa","Hud"]','[1]','Surah Hud 11:37–44.','approved'),
+  (59,19,'Yusuf (AS)','easy','mcq','Which surah describes its story as "the best of stories"?','["Yusuf","Maryam","Al-Kahf","Ta-Ha"]','[0]','Surah Yusuf 12:3.','approved'),
+  (60,19,'Ibrahim (AS)','easy','true_false','Ibrahim (AS) is called Khalilullah — the intimate friend of Allah.','["True","False"]','true','Surah An-Nisa 4:125.','approved'),
+  (61,19,'Adam (AS)','easy','short_answer','Who was the first prophet?','[]','"Adam"','Adam (AS) was the first human and the first prophet.','approved'),
+  (62,20,'Isnad & Matn','easy','mcq','What is the chain of narrators of a hadith called?','["Matn","Isnad","Sharh","Tafsir"]','[1]','The isnad is the chain; the matn is the text.','approved'),
+  (63,20,'Collections','easy','mcq','Which collection is widely regarded as the most authentic book after the Quran?','["Sahih al-Bukhari","Sunan Abi Dawud","Musnad Ahmad","Al-Muwatta"]','[0]','Sahih al-Bukhari, followed by Sahih Muslim.','approved'),
+  (64,20,'Collections','medium','multiple_select','Which of these are among the six major hadith collections (Al-Kutub as-Sittah)?','["Sahih Muslim","Jami'' at-Tirmidhi","Riyad as-Salihin","Sunan an-Nasa''i"]','[0,1,3]','Riyad as-Salihin is a later anthology by Imam an-Nawawi.','approved'),
+  (65,20,'Grading','hard','essay','Explain the difference between a sahih and a da''if hadith, and list the conditions of a sahih hadith.','[]','[]','Continuous chain, upright and precise narrators, no shudhudh and no hidden defect (''illah).','approved');
 
 INSERT INTO question_bank (id, subject, course_id, topic, difficulty, type, question_text, options, correct_answer, explanation,
                            marks, time_seconds, status, category, tags, created_by, approved_by, approved_at, submitted_at)
@@ -670,7 +705,7 @@ SELECT md5('seed-quiz-' || c.id)::uuid, c.id, split_part(c.title, ':', 1) || ' �
        c.professor_id, now() - w.started - interval '2 days'
 FROM courses c
 CROSS JOIN LATERAL (SELECT ((10 + abs(hashtext('quiz' || c.id::text)) % 25) || ' days')::interval AS started) w
-WHERE c.id::text LIKE 'e1000000-%' AND right(c.id::text, 2)::int BETWEEN 10 AND 17
+WHERE c.id::text LIKE 'e1000000-%' AND right(c.id::text, 2)::int IN (10, 11, 12, 13, 14, 15, 16, 17, 19, 20)
 ON CONFLICT DO NOTHING;
 
 INSERT INTO exams (id, course_id, title, description, type, duration_minutes, pass_marks, shuffle_questions, shuffle_options,
@@ -682,7 +717,8 @@ SELECT md5('seed-mid-' || c.id)::uuid, c.id, split_part(c.title, ':', 1) || ' �
 FROM courses c
 CROSS JOIN LATERAL (SELECT ((5 + abs(hashtext('mid' || c.id::text)) % 15) || ' days')::interval AS starts) w
 WHERE c.id IN ('e1000000-0000-4000-8000-000000000010', 'e1000000-0000-4000-8000-000000000012',
-               'e1000000-0000-4000-8000-000000000013', 'e1000000-0000-4000-8000-000000000014')
+               'e1000000-0000-4000-8000-000000000013', 'e1000000-0000-4000-8000-000000000014',
+               'e1000000-0000-4000-8000-000000000019')
 ON CONFLICT DO NOTHING;
 
 INSERT INTO exam_questions (id, exam_id, question_id, order_index, marks)
@@ -860,7 +896,7 @@ INSERT INTO seed_live VALUES
 INSERT INTO seed_live
 SELECT l.course, l.ord, 'Live Halaqah: ' || l.title,
        (ARRAY['-20 days', '-6 days', '+3 days']::interval[])[l.ord] + ((abs(hashtext('lv' || l.course)) % 48) || ' hours')::interval
-FROM seed_lec l WHERE l.course BETWEEN 10 AND 17 AND l.ord <= 3;
+FROM seed_lec l WHERE l.course IN (10, 11, 12, 13, 14, 15, 16, 17, 19, 20) AND l.ord <= 3;
 
 INSERT INTO live_sessions (id, course_id, instructor_id, title, description, start_at, end_at, provider, provider_meeting_id, join_url, created_at)
 SELECT md5('seed-live-' || l.course || '-' || l.s)::uuid, c.id, c.professor_id, l.title,
@@ -961,10 +997,10 @@ FROM seed_enroll WHERE course = 1 AND status = 'active';
 
 INSERT INTO fee_assessments (id, student_id, fee_structure_id, amount_assessed, amount_paid, due_date, status, created_at)
 SELECT md5('seed-fa-' || f.student || '-' || f.tag)::uuid,
-       ('e0000000-0000-4000-8000-0000000000' || f.student)::uuid,
+       su.id,
        ('e9000000-0000-4000-8000-00000000000' || f.fee)::uuid,
        f.assessed, f.paid, date_trunc('day', now() + f.due), f.status, now() + f.due - interval '20 days'
-FROM seed_fa f
+FROM seed_fa f JOIN seed_users su ON su.n = f.student
 ON CONFLICT DO NOTHING;
 
 INSERT INTO fee_assessments_discounts (id, assessment_id, discount_id, amount_deducted)
@@ -984,23 +1020,23 @@ ON CONFLICT DO NOTHING;
 
 INSERT INTO fee_payments (id, student_id, assessment_id, amount, payment_method, status, reference_number, created_at)
 SELECT md5('seed-fp-' || f.student || '-' || f.tag)::uuid,
-       ('e0000000-0000-4000-8000-0000000000' || f.student)::uuid,
+       su.id,
        md5('seed-fa-' || f.student || '-' || f.tag)::uuid,
        f.paid,
        (ARRAY['bank_transfer', 'cash', 'credit_card', 'online_gateway'])[1 + f.student % 4],
        'completed', 'SEED-' || upper(left(md5('seed-fp-' || f.student || '-' || f.tag), 10)),
        now() + f.due - interval '2 days'
-FROM seed_fa f WHERE f.paid > 0
+FROM seed_fa f JOIN seed_users su ON su.n = f.student WHERE f.paid > 0
 ON CONFLICT DO NOTHING;
 
 -- Failed payment attempts on overdue tuition
 INSERT INTO fee_payments (id, student_id, assessment_id, amount, payment_method, status, reference_number, created_at)
 SELECT md5('seed-fp-failed-' || f.student)::uuid,
-       ('e0000000-0000-4000-8000-0000000000' || f.student)::uuid,
+       su.id,
        md5('seed-fa-' || f.student || '-tuition')::uuid,
        f.assessed, 'credit_card', 'failed', 'SEED-F' || upper(left(md5('seed-fp-failed-' || f.student), 9)),
        now() - interval '8 days'
-FROM seed_fa f WHERE f.tag = 'tuition' AND f.status = 'overdue'
+FROM seed_fa f JOIN seed_users su ON su.n = f.student WHERE f.tag = 'tuition' AND f.status = 'overdue'
 ON CONFLICT DO NOTHING;
 
 INSERT INTO fee_refunds (id, payment_id, amount, reason, status, created_at) VALUES
@@ -1120,6 +1156,25 @@ INSERT INTO audit_logs (id, actor_id, action, entity_type, entity_id, details, c
   ('ed000000-0000-4000-8000-000000000010', 'e0000000-0000-4000-8000-000000000001', 'approve_course',     'course',      'e1000000-0000-4000-8000-000000000006', '{"from":"pending","to":"approved"}', now() - interval '25 days'),
   ('ed000000-0000-4000-8000-000000000011', 'e0000000-0000-4000-8000-000000000001', 'revoke_certificate', 'certificate', 'eb000000-0000-4000-8000-000000000005', '{"reason":"Student withdrew before completion was verified"}', now() - interval '58 days'),
   ('ed000000-0000-4000-8000-000000000012', 'e0000000-0000-4000-8000-000000000002', 'record_payment',     'fee_payment', md5('seed-fp-21-reg')::uuid, '{"amount":25,"method":"cash"}', now() - interval '65 days')
+ON CONFLICT DO NOTHING;
+
+-- Alerts for the demo accounts (professor@demo.com / student@demo.com)
+INSERT INTO alerts (id, user_id, type, severity, title, message, read_at, created_at)
+SELECT md5('seed-alert-demo-' || u.n || '-' || a.k)::uuid, u.id, a.type, a.severity, a.title, a.message,
+       CASE WHEN a.read THEN now() - a.age + interval '1 hour' END, now() - a.age
+FROM seed_users u
+JOIN (VALUES
+  (98, 1, 'grading_pending',      'warning',  'Essays Awaiting Grading',  'Introduction to Hadith Studies — Unit Quiz has essay answers waiting for your review.', false, '5 hours'::interval),
+  (98, 2, 'assignment_submitted', 'info',     'New Submissions',          'New submissions received for "Research Task: Ibrahim (AS): The Friend of Allah".', false, '1 day'),
+  (98, 3, 'kpi_below_target',     'warning',  'KPI Below Target',         'Your "Lectures Created" KPI is below the monthly target. Two more lectures will put you on track.', false, '2 days'),
+  (98, 4, 'live_reminder',        'info',     'Live Class Tomorrow',      'Your "Live Halaqah" for Stories of the Prophets is scheduled within the next few days.', true, '3 days'),
+  (98, 5, 'course_approved',      'info',     'Course Approved',          'Your course "Introduction to Hadith Studies" has been approved and published.', true, '38 days'),
+  (99, 1, 'exam_published',       'info',     'Midterm Scheduled',        'The Stories of the Prophets midterm is open for registration — you are registered.', false, '6 hours'),
+  (99, 2, 'assignment_due',       'warning',  'Assignment Due Soon',      '"Wudu Step-by-Step Checklist" is due in 3 days.', false, '1 day'),
+  (99, 3, 'low_attendance',       'critical', 'Attendance Warning',       'You have missed lectures in "Seerah: The Makkan Period". Catch up on the recordings.', false, '2 days'),
+  (99, 4, 'live_reminder',        'info',     'Live Class Today',         '"Live Recitation Clinic" is starting now — join from the Live page.', false, '15 minutes'),
+  (99, 5, 'certificate_issued',   'info',     'Certificate Issued',       'Your certificate for "Seerah: The Madinan Period" is ready to download.', true, '100 days')
+) a(n, k, type, severity, title, message, read, age) ON a.n = u.n
 ON CONFLICT DO NOTHING;
 
 -- Generated alerts
