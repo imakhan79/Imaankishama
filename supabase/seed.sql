@@ -1278,4 +1278,24 @@ FROM enrollments e
 WHERE e.id IN (SELECT md5('seed-enr-' || course || '-' || student)::uuid FROM seed_enroll)
 ON CONFLICT DO NOTHING;
 
+-- ════════════════════════════════════════════════════════════════════════════
+-- 15. TIMESTAMP TOUCH-UPS (idempotent)
+-- Dashboards sort by created_at, which defaults to the moment the seed ran.
+-- ════════════════════════════════════════════════════════════════════════════
+UPDATE lectures SET created_at = least(publish_date, now() - interval '1 day'), updated_at = least(publish_date, now() - interval '1 day')
+WHERE id::text LIKE 'e2000000-%' AND created_at > least(publish_date, now() - interval '1 day');
+
+UPDATE question_bank SET created_at = coalesce(submitted_at, now() - interval '1 day'), updated_at = coalesce(approved_at, submitted_at, now() - interval '1 day')
+WHERE id::text LIKE 'e4000000-%' AND created_at > coalesce(submitted_at, now() - interval '1 day');
+
+-- The enrollment trigger stamps professor alerts with the seed run time; use the enrollment date instead.
+UPDATE alerts a SET created_at = e.enrolled_at
+FROM enrollments e
+JOIN profiles p ON p.id = e.student_id
+JOIN courses c ON c.id = e.course_id
+WHERE a.type = 'new_enrollment' AND a.user_id = c.professor_id
+  AND a.message = coalesce(p.full_name, 'A student') || ' enrolled in your course: ' || c.title
+  AND e.id IN (SELECT md5('seed-enr-' || course || '-' || student)::uuid FROM seed_enroll)
+  AND a.created_at > e.enrolled_at + interval '1 hour';
+
 COMMIT;
